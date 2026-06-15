@@ -10,9 +10,12 @@ RUN echo "upload_max_filesize = 10M" >> /usr/local/etc/php/conf.d/uploads.ini \
 COPY . /var/www/html/
 
 RUN chown -R www-data:www-data /var/www/html/public/uploads \
-    && chmod -R 755 /var/www/html/public/uploads
+    && chmod -R 755 /var/www/html/public/uploads \
+    && rm -f /var/www/html/index.html
 
-RUN rm -f /var/www/html/index.html
+# Set document root to public/
+RUN sed -i 's|/var/www/html|/var/www/html/public|g' /etc/apache2/sites-available/000-default.conf \
+    && sed -i 's|/var/www/html|/var/www/html/public|g' /etc/apache2/conf-available/docker-php.conf 2>/dev/null || true
 
 COPY docker-entrypoint.sh /usr/local/bin/
 RUN chmod +x /usr/local/bin/docker-entrypoint.sh
