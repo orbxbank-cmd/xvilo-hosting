@@ -1,23 +1,20 @@
 FROM php:8.2-apache
 
-RUN docker-php-ext-install pdo pdo_mysql
+RUN docker-php-ext-install pdo pdo_mysql && a2enmod rewrite
 
-RUN a2enmod rewrite
-
-RUN echo "upload_max_filesize = 10M" >> /usr/local/etc/php/conf.d/uploads.ini \
+RUN echo "upload_max_filesize = 10M" > /usr/local/etc/php/conf.d/uploads.ini \
     && echo "post_max_size = 12M" >> /usr/local/etc/php/conf.d/uploads.ini
 
 COPY . /var/www/html/
 
-RUN chown -R www-data:www-data /var/www/html/public/uploads \
-    && chmod -R 755 /var/www/html/public/uploads \
-    && rm -f /var/www/html/index.html
+RUN rm -f /var/www/html/index.html \
+    && chown -R www-data:www-data /var/www/html/public/uploads \
+    && chmod -R 755 /var/www/html/public/uploads
 
-# Set document root to public/
-RUN sed -i 's|/var/www/html|/var/www/html/public|g' /etc/apache2/sites-available/000-default.conf \
-    && sed -i 's|/var/www/html|/var/www/html/public|g' /etc/apache2/conf-available/docker-php.conf 2>/dev/null || true
+# Use public/ as document root
+RUN sed -i 's|DocumentRoot /var/www/html|DocumentRoot /var/www/html/public|' /etc/apache2/sites-available/000-default.conf
 
-COPY docker-entrypoint.sh /usr/local/bin/
+COPY docker-entrypoint.sh /usr/local/bin/docker-entrypoint.sh
 RUN chmod +x /usr/local/bin/docker-entrypoint.sh
 
 ENTRYPOINT ["docker-entrypoint.sh"]
