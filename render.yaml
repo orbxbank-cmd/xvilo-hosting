@@ -5,20 +5,3 @@ services:
     repo: https://github.com/orbxbank-cmd/xvilo-hosting
     branch: main
     dockerfilePath: ./Dockerfile
-    envVars:
-      - key: APP_URL
-        value: https://xvilo-hosting.onrender.com
-      - key: DB_HOST
-        value: 62.84.180.151
-      - key: DB_PORT
-        value: "3306"
-      - key: DB_NAME
-        value: s82939_Lost100
-      - key: DB_USER
-        value: pterodactyl
-      - key: DB_PASS
-        value: P@ssw0rd2024!
-      - key: ADMIN_CODE
-        value: admin123
-    envVarGroups:
-      - xvilo-db
