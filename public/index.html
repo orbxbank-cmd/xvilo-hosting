@@ -20,6 +20,8 @@
       <ul class="nav-links" id="navLinks">
         <li><a href="#pricing">Pricing</a></li>
         <li><a href="#features">Features</a></li>
+        <li><a href="#payment">Payment</a></li>
+        <li><a href="#faq">FAQ</a></li>
         <li><a href="#how">How it works</a></li>
         <li><a href="https://discord.gg/E9HjMePMsalBUEHScBfiw4" class="btn btn-discord" target="_blank">Discord</a></li>
         <li><a href="http://62.84.180.151" class="btn btn-primary" target="_blank">Dashboard</a></li>
@@ -53,54 +55,152 @@
 
   <section id="pricing" class="section pricing">
     <div class="container">
+      <div class="toggle-currency">
+        <button class="toggle-btn active" data-currency="eur">€ Euro</button>
+        <button class="toggle-btn" data-currency="mad">DH Maroc</button>
+      </div>
       <h2 class="section-title">Choose your <span class="gradient-text">Plan</span></h2>
       <p class="section-sub">All plans include DDoS protection, voice support, and Pterodactyl panel access.</p>
-      <div class="pricing-grid">
+      <div class="pricing-grid" id="pricingGrid">
+
+        <!-- SAMP I -->
         <div class="pricing-card">
           <div class="pricing-header">
-            <h3>Bronze</h3>
-            <div class="price"><span class="currency">$</span>2.99<span class="period">/mo</span></div>
+            <h3>SAMP I</h3>
+            <div class="price" data-eur="2,99" data-mad="15"><span class="currency">€</span>2,99<span class="period">/mo</span></div>
           </div>
           <ul class="pricing-features">
-            <li>128 MB RAM</li>
-            <li>1 GB SSD Storage</li>
-            <li>10 Players</li>
+            <li><strong>250</strong> Player Slots</li>
+            <li>1x CPU Thread</li>
+            <li>1 GB DDR5 RAM</li>
+            <li>50 GB NVMe SSD</li>
+            <li>17 Tbit DDoS Protection</li>
             <li>Voice Plugin Support</li>
             <li>Pterodactyl Panel</li>
-            <li>DDoS Protection</li>
           </ul>
-          <a href="http://62.84.180.151" class="btn btn-primary btn-block" target="_blank">Order Now</a>
+          <a href="#" class="btn btn-primary btn-block order-btn">Order Now</a>
         </div>
+
+        <!-- SAMP II -->
         <div class="pricing-card featured">
           <div class="badge-popular">Most Popular</div>
           <div class="pricing-header">
-            <h3>Silver</h3>
-            <div class="price"><span class="currency">$</span>4.99<span class="period">/mo</span></div>
+            <h3>SAMP II</h3>
+            <div class="price" data-eur="5,99" data-mad="20"><span class="currency">€</span>5,99<span class="period">/mo</span></div>
           </div>
           <ul class="pricing-features">
-            <li>256 MB RAM</li>
-            <li>2 GB SSD Storage</li>
-            <li>25 Players</li>
+            <li><strong>500</strong> Player Slots</li>
+            <li>1x CPU Thread</li>
+            <li>2 GB DDR5 RAM</li>
+            <li>100 GB NVMe SSD</li>
+            <li>17 Tbit DDoS Protection</li>
             <li>Voice Plugin Support</li>
             <li>Pterodactyl Panel</li>
-            <li>DDoS Protection</li>
           </ul>
-          <a href="http://62.84.180.151" class="btn btn-primary btn-block" target="_blank">Order Now</a>
+          <a href="#" class="btn btn-primary btn-block order-btn">Order Now</a>
         </div>
+
+        <!-- SAMP III -->
         <div class="pricing-card">
           <div class="pricing-header">
-            <h3>Gold</h3>
-            <div class="price"><span class="currency">$</span>9.99<span class="period">/mo</span></div>
+            <h3>SAMP III</h3>
+            <div class="price" data-eur="8,99" data-mad="30"><span class="currency">€</span>8,99<span class="period">/mo</span></div>
           </div>
           <ul class="pricing-features">
-            <li>512 MB RAM</li>
-            <li>4 GB SSD Storage</li>
-            <li>50 Players</li>
+            <li><strong>750</strong> Player Slots</li>
+            <li>1x CPU Thread</li>
+            <li>3 GB DDR5 RAM</li>
+            <li>150 GB NVMe SSD</li>
+            <li>17 Tbit DDoS Protection</li>
             <li>Voice Plugin Support</li>
             <li>Pterodactyl Panel</li>
-            <li>DDoS Protection</li>
           </ul>
-          <a href="http://62.84.180.151" class="btn btn-primary btn-block" target="_blank">Order Now</a>
+          <a href="#" class="btn btn-primary btn-block order-btn">Order Now</a>
+        </div>
+
+        <!-- SAMP IV -->
+        <div class="pricing-card">
+          <div class="pricing-header">
+            <h3>SAMP IV</h3>
+            <div class="price" data-eur="11,99" data-mad="45"><span class="currency">€</span>11,99<span class="period">/mo</span></div>
+          </div>
+          <ul class="pricing-features">
+            <li><strong>1000</strong> Player Slots</li>
+            <li>2x CPU Threads</li>
+            <li>4 GB DDR5 RAM</li>
+            <li>200 GB NVMe SSD</li>
+            <li>17 Tbit DDoS Protection</li>
+            <li>Voice Plugin Support</li>
+            <li>Pterodactyl Panel</li>
+          </ul>
+          <a href="#" class="btn btn-primary btn-block order-btn">Order Now</a>
+        </div>
+
+        <!-- SAMP V -->
+        <div class="pricing-card">
+          <div class="pricing-header">
+            <h3>SAMP V</h3>
+            <div class="price" data-eur="15,99" data-mad="-"><span class="currency">€</span>15,99<span class="period">/mo</span></div>
+          </div>
+          <ul class="pricing-features">
+            <li><strong>1500</strong> Player Slots</li>
+            <li>2x CPU Threads</li>
+            <li>6 GB DDR5 RAM</li>
+            <li>250 GB NVMe SSD</li>
+            <li>17 Tbit DDoS Protection</li>
+            <li>Voice Plugin Support</li>
+            <li>Pterodactyl Panel</li>
+          </ul>
+          <a href="#" class="btn btn-primary btn-block order-btn">Order Now</a>
+        </div>
+
+        <!-- SAMP VI -->
+        <div class="pricing-card">
+          <div class="pricing-header">
+            <h3>SAMP VI</h3>
+            <div class="price" data-eur="21,50" data-mad="-"><span class="currency">€</span>21,50<span class="period">/mo</span></div>
+          </div>
+          <ul class="pricing-features">
+            <li><strong>2000</strong> Player Slots</li>
+            <li>3x CPU Threads</li>
+            <li>8 GB DDR5 RAM</li>
+            <li>300 GB NVMe SSD</li>
+            <li>17 Tbit DDoS Protection</li>
+            <li>Voice Plugin Support</li>
+            <li>Pterodactyl Panel</li>
+          </ul>
+          <a href="#" class="btn btn-primary btn-block order-btn">Order Now</a>
+        </div>
+
+      </div>
+      <p class="pricing-note">* VibeGAMES is currently upgrading servers to AMD Ryzen 9950X CPU. Your server may be delivered with an AMD Ryzen 7950X depending on location and availability.</p>
+    </div>
+  </section>
+
+  <section id="payment" class="section payment">
+    <div class="container">
+      <h2 class="section-title">Payment <span class="gradient-text">Methods</span></h2>
+      <p class="section-sub">We accept Inwi &amp; Orange Money — same as Lost Roleplay.</p>
+      <div class="payment-steps">
+        <div class="payment-step">
+          <div class="step-num">1</div>
+          <h3>Choose a Plan</h3>
+          <p>Select the plan you want and click "Order Now".</p>
+        </div>
+        <div class="payment-step">
+          <div class="step-num">2</div>
+          <h3>Receive Code</h3>
+          <p>We send you a payment code via WhatsApp or Discord.</p>
+        </div>
+        <div class="payment-step">
+          <div class="step-num">3</div>
+          <h3>Upload Screenshot</h3>
+          <p>Pay via Inwi or Orange Money and upload the proof screenshot.</p>
+        </div>
+        <div class="payment-step">
+          <div class="step-num">4</div>
+          <h3>Admin Approves</h3>
+          <p>We check the payment in the admin panel and approve your server instantly.</p>
         </div>
       </div>
     </div>
@@ -151,18 +251,42 @@
       <div class="steps">
         <div class="step">
           <div class="step-num">1</div>
-          <h3>Order Your Plan</h3>
-          <p>Choose a plan and contact us via Discord to place your order.</p>
+          <h3>Choose &amp; Pay</h3>
+          <p>Choose your plan and pay via Inwi or Orange Money. Upload the payment screenshot.</p>
         </div>
         <div class="step">
           <div class="step-num">2</div>
-          <h3>Get Access</h3>
-          <p>We create your server and send you Pterodactyl login credentials.</p>
+          <h3>Admin Approves</h3>
+          <p>We check your payment in the admin panel and approve it within minutes.</p>
         </div>
         <div class="step">
           <div class="step-num">3</div>
-          <h3>Upload & Play</h3>
-          <p>Upload your gamemode (.amx), SQL files, and start playing.</p>
+          <h3>Upload &amp; Play</h3>
+          <p>Download your Pterodactyl credentials, upload your gamemode, and start playing.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="faq" class="section faq">
+    <div class="container">
+      <h2 class="section-title">Frequently Asked <span class="gradient-text">Questions</span></h2>
+      <div class="faq-list">
+        <div class="faq-item">
+          <div class="faq-question">What hardware do you use?</div>
+          <div class="faq-answer">We are currently upgrading to the latest AMD Ryzen 9950X CPU. Depending on location and availability, your server may be delivered with an AMD Ryzen 7950X.</div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-question">How do I pay?</div>
+          <div class="faq-answer">We accept Inwi and Orange Money. After ordering, you will receive a payment code. Pay and upload the screenshot — we approve it in the admin panel.</div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-question">How fast is the setup?</div>
+          <div class="faq-answer">Once payment is approved, your server is deployed instantly via our Pterodactyl panel. You get access within minutes.</div>
+        </div>
+        <div class="faq-item">
+          <div class="faq-question">Do I get full access?</div>
+          <div class="faq-answer">Yes — full Pterodactyl panel access with file manager, console, database management, and voice plugin support.</div>
         </div>
       </div>
     </div>
@@ -187,6 +311,8 @@
         <ul>
           <li><a href="#pricing">Pricing</a></li>
           <li><a href="#features">Features</a></li>
+          <li><a href="#payment">Payment</a></li>
+          <li><a href="#faq">FAQ</a></li>
           <li><a href="#how">How it works</a></li>
           <li><a href="http://62.84.180.151">Dashboard</a></li>
         </ul>
