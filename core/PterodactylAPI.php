@@ -84,7 +84,7 @@ class PterodactylAPI
             'startup' => './samp03svr {{SERVER_PORT}} {{MAX_PLAYERS}}',
             'environment' => [
                 'SAMP_VERSION' => '0.3.7',
-                'SERVER_PORT' => 7777,
+                'SERVER_PORT' => 0,
                 'MAX_PLAYERS' => $maxPlayers,
             ],
             'limits' => [
