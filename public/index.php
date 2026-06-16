@@ -20,11 +20,11 @@
         <span>Moyens de paiement acceptés</span>
         <div class="hero-payments-logos">
           <div class="pm-card">
-            <img src="https://i.postimg.cc/DfpczZwx/images-(3).jpg" alt="Inwi Carta">
+            <img src="https://i.postimg.cc/RCpT0FZX/images-(4).jpg" alt="Inwi Carta">
             <span>Inwi Carta</span>
           </div>
           <div class="pm-card">
-            <img src="https://i.postimg.cc/RCpT0FZX/images-(4).jpg" alt="Orange Carta">
+            <img src="https://i.postimg.cc/DfpczZwx/images-(3).jpg" alt="Orange Carta">
             <span>Orange Carta</span>
           </div>
         </div>
@@ -45,8 +45,8 @@
       </p>
       <div class="payment-methods-badge">
         <span>🇲🇦 Paiement 100% Marocain —</span>
-        <img src="https://i.postimg.cc/DfpczZwx/images-(3).jpg" alt="Inwi Carta">
-        <img src="https://i.postimg.cc/RCpT0FZX/images-(4).jpg" alt="Orange Carta">
+        <img src="https://i.postimg.cc/RCpT0FZX/images-(4).jpg" alt="Inwi Carta">
+        <img src="https://i.postimg.cc/DfpczZwx/images-(3).jpg" alt="Orange Carta">
         <span>Inwi Carta &amp; Orange Carta</span>
       </div>
       <div class="pricing-grid">
@@ -127,7 +127,7 @@
       <div class="payment-showcase">
         <div class="payment-showcase-card">
           <div class="payment-showcase-img">
-            <img src="https://i.postimg.cc/DfpczZwx/images-(3).jpg" alt="Inwi Carta">
+            <img src="https://i.postimg.cc/RCpT0FZX/images-(4).jpg" alt="Inwi Carta">
           </div>
           <h3>Inwi Carta</h3>
           <p>Paiement rapide et sécurisé via Inwi Carta. Envoie le montant au code fourni et uploads la capture.</p>
@@ -137,7 +137,7 @@
         </div>
         <div class="payment-showcase-card">
           <div class="payment-showcase-img">
-            <img src="https://i.postimg.cc/RCpT0FZX/images-(4).jpg" alt="Orange Carta">
+            <img src="https://i.postimg.cc/DfpczZwx/images-(3).jpg" alt="Orange Carta">
           </div>
           <h3>Orange Carta</h3>
           <p>Paiement rapide et sécurisé via Orange Carta. Envoie le montant au code fourni et uploads la capture.</p>
