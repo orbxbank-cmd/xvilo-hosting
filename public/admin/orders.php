@@ -26,57 +26,29 @@ if ($action === 'approve' && isset($_GET['id'])) {
         $ptero = new PterodactylAPI();
         $pteroConfig = $config['pterodactyl'];
 
-        $resources = PterodactylAPI::getPlanResources($order['plan_name']);
-        $maxPlayers = PterodactylAPI::getPlanSlots($order['plan_name']);
-
+        $userId = $ptero->findUserByUsername('client1') ?: 1;
         $allocationId = $ptero->getNextAllocation($pteroConfig['node_id']);
 
         if ($allocationId) {
-            $serverParams = [
-                'name' => $order['server_name'] ?: ('Server-' . $order['id']),
-                'user' => 1,
-                'egg' => $pteroConfig['egg_id'],
-                'docker_image' => 'temasm/samp',
-                'startup' => './samp03svr {{SERVER_PORT}} {{MAX_PLAYERS}}',
-                'environment' => [
-                    'SERVER_PORT' => '{{SERVER_PORT}}',
-                    'MAX_PLAYERS' => (string)$maxPlayers,
-                ],
-                'limits' => [
-                    'memory' => $resources['memory'],
-                    'swap' => 0,
-                    'disk' => $resources['disk'],
-                    'io' => 500,
-                    'cpu' => $resources['cpu'],
-                ],
-                'feature_limits' => [
-                    'databases' => 1,
-                    'allocations' => 1,
-                    'backups' => 0,
-                ],
-                'allocation' => [
-                    'default' => $allocationId,
-                ],
-            ];
-
+            $serverParams = $ptero->buildServerPayload($order, $allocationId, $userId);
             $result = $ptero->createServer($serverParams);
 
             if ($result && isset($result['attributes'])) {
                 $serverId = $result['attributes']['id'];
-                $serverPort = $result['attributes']['allocation']['port'] ?? 0;
+                $uuid = $result['attributes']['uuid'];
 
-                $username = 'server' . $serverId;
+                $username = 'u' . $serverId;
                 $password = bin2hex(random_bytes(6));
 
                 $db->update('xvilo_orders', [
                     'status' => 'approved',
                     'server_id' => $serverId,
-                    'server_port' => $serverPort,
+                    'server_port' => 0,
                     'server_username' => $username,
                     'server_password' => $password,
                 ], 'id = :id', ['id' => $id]);
 
-                $msg = 'Serveur créé #' . $serverId . ' sur le port ' . $serverPort;
+                $msg = 'Serveur créé #' . $serverId . ' (' . substr($uuid, 0, 8) . '...)';
             } else {
                 $db->update('xvilo_orders', [
                     'status' => 'approved',

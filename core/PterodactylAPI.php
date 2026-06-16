@@ -57,9 +57,52 @@ class PterodactylAPI
         return null;
     }
 
+    public function findUserByUsername(string $username): ?int
+    {
+        $res = $this->request('GET', "/api/application/users?filter[username]={$username}");
+        if ($res && !empty($res['data'])) {
+            return $res['data'][0]['attributes']['id'];
+        }
+        return null;
+    }
+
     public function createServer(array $params): ?array
     {
         return $this->request('POST', '/api/application/servers', $params);
+    }
+
+    public function buildServerPayload(array $order, int $allocationId, int $userId): array
+    {
+        $resources = self::getPlanResources($order['plan_name']);
+        $maxPlayers = self::getPlanSlots($order['plan_name']);
+
+        return [
+            'name' => $order['server_name'] ?: ('Serveur-' . $order['id']),
+            'user' => $userId,
+            'egg' => 1,
+            'docker_image' => 'temasm/samp',
+            'startup' => './samp03svr {{SERVER_PORT}} {{MAX_PLAYERS}}',
+            'environment' => [
+                'SAMP_VERSION' => '0.3.7',
+                'SERVER_PORT' => 7777,
+                'MAX_PLAYERS' => $maxPlayers,
+            ],
+            'limits' => [
+                'memory' => $resources['memory'],
+                'swap' => 0,
+                'disk' => $resources['disk'],
+                'io' => 500,
+                'cpu' => $resources['cpu'],
+            ],
+            'feature_limits' => [
+                'databases' => 1,
+                'allocations' => 1,
+                'backups' => 0,
+            ],
+            'allocation' => [
+                'default' => $allocationId,
+            ],
+        ];
     }
 
     public function getServer(int $serverId): ?array
@@ -67,13 +110,13 @@ class PterodactylAPI
         return $this->request('GET', "/api/application/servers/{$serverId}");
     }
 
-    public function createDatabase(int $serverId, string $hostId): ?array
+    public function createDatabase(int $serverId, int $databaseHostId): ?array
     {
         $dbName = 'srv_' . $serverId;
         $password = bin2hex(random_bytes(8));
         return $this->request('POST', "/api/application/servers/{$serverId}/databases", [
             'database' => $dbName,
-            'host' => $hostId,
+            'host' => $databaseHostId,
             'password' => $password,
         ]);
     }
