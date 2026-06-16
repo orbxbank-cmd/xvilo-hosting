@@ -3,14 +3,13 @@
   <section class="hero">
     <div class="hero-bg"></div>
     <div class="container hero-inner">
-      <div class="hero-badge">SA-MP 0.3.7</div>
+      <h6 class="hero-badge">SA-MP 0.3.7</h6>
       <h1 class="hero-title">
-        SA-MP Server<br />
-        <span class="gradient-text">Hosting</span>
+        Welcome to <br><span>Xvilo Hosting</span>
       </h1>
       <p class="hero-sub">
-        Hébergement SA-MP performant avec protection DDoS, plugin vocal, et panel Pterodactyl.<br />
-        Paiement via Inwi &amp; Orange Money.
+        Hébergement SA-MP performant avec protection DDoS, plugin vocal, et panel Pterodactyl.<br>
+        Paiement via Inwi Carta &amp; Orange Carta.
       </p>
       <div class="hero-cta">
         <a href="#pricing" class="btn btn-primary btn-lg">Voir les Plans</a>
@@ -24,7 +23,7 @@
     </div>
   </section>
 
-  <section id="pricing" class="section pricing">
+  <section id="pricing" class="section">
     <div class="container">
       <h2 class="section-title">Plans &amp; <span class="gradient-text">Pricing</span></h2>
       <p class="section-sub">Tous les plans incluent la protection DDoS, support du plugin vocal et accès au panel Pterodactyl.</p>
@@ -99,7 +98,7 @@
     </div>
   </section>
 
-  <section id="features" class="section features">
+  <section id="features" class="section">
     <div class="container">
       <h2 class="section-title">Pourquoi <span class="gradient-text">Xvilo</span> ?</h2>
       <p class="section-sub">Tout ce qu'il faut pour lancer et gérer ton serveur SA-MP.</p>
@@ -138,7 +137,7 @@
     </div>
   </section>
 
-  <section id="faq" class="section faq">
+  <section id="faq" class="section">
     <div class="container">
       <h2 class="section-title">Foire Aux <span class="gradient-text">Questions</span></h2>
       <div class="faq-list">
@@ -148,7 +147,7 @@
         </div>
         <div class="faq-item">
           <div class="faq-question">Comment payer ?</div>
-          <div class="faq-answer">On accepte Inwi et Orange Money. Tu choisis ton plan, remplis le formulaire, on t'envoie un code de paiement, tu paies et tu uploads la capture d'écran. Je vérifie et j'approuve.</div>
+          <div class="faq-answer">On accepte Inwi Carta et Orange Carta. Tu choisis ton plan, remplis le formulaire, on t'envoie un code de paiement, tu paies et tu uploads la capture d'écran. Je vérifie et j'approuve.</div>
         </div>
         <div class="faq-item">
           <div class="faq-question">C'est rapide ?</div>

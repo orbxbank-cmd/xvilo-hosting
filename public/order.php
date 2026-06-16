@@ -41,13 +41,4 @@ if (!isset($plans[$plan])) {
   </div>
 </section>
 
-<style>
-.order-form { background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 32px; }
-.form-group { margin-bottom: 20px; }
-.form-group label { display: block; font-size: 14px; font-weight: 600; margin-bottom: 6px; color: var(--text); }
-.form-group input, .form-group select { width: 100%; padding: 12px 16px; border-radius: 8px; border: 1px solid var(--border); background: var(--bg); color: var(--text); font-size: 14px; outline: none; transition: border 0.2s; }
-.form-group input:focus { border-color: var(--primary); }
-.form-group input::placeholder { color: var(--text-muted); }
-</style>
-
 <?php require __DIR__ . '/../templates/footer.php'; ?>

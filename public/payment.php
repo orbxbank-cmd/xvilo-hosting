@@ -12,17 +12,18 @@ require __DIR__ . '/../core/Database.php';
 $db = Database::getInstance();
 $order = $db->fetch("SELECT * FROM xvilo_orders WHERE id = ? AND status = 'pending'", [$order_id]);
 if (!$order) {
-    echo '<section class="section" style="padding-top:120px;"><div class="container"><h2>Commande introuvable</h2><a href="/" class="btn btn-primary">Retour</a></div></section>';
+    echo '<section class="section" style="padding-top:120px;"><div class="container"><h2 class="section-title">Commande introuvable</h2><a href="/" class="btn btn-primary">Retour</a></div></section>';
     require __DIR__ . '/../templates/footer.php';
     exit;
 }
 
 $error = $_GET['error'] ?? '';
 $success = $_GET['success'] ?? '';
+$methodLabel = $order['payment_method'] === 'inwi' ? 'Inwi Carta' : ($order['payment_method'] === 'orange' ? 'Orange Carta' : '...');
 ?>
 <section class="section" style="padding-top:120px;">
   <div class="container" style="max-width:600px;">
-    <h2 class="section-title">Paiement <span class="gradient-text"><?= htmlspecialchars($order['payment_method'] ?? '...') ?></span></h2>
+    <h2 class="section-title">Paiement <span class="gradient-text"><?= $methodLabel ?></span></h2>
     <p class="section-sub">Plan <strong><?= htmlspecialchars($order['plan_name']) ?></strong> — <strong><?= (int)$order['plan_price'] ?> DH</strong></p>
 
     <?php if ($success): ?>
@@ -42,15 +43,15 @@ $success = $_GET['success'] ?? '';
             <label class="payment-option">
               <input type="radio" name="method" value="inwi" required>
               <div class="payment-option-content">
-                <strong>Inwi Money</strong>
-                <span>Paiement via Inwi</span>
+                <strong>Inwi Carta</strong>
+                <span>Paiement via Inwi Carta</span>
               </div>
             </label>
             <label class="payment-option">
               <input type="radio" name="method" value="orange" required>
               <div class="payment-option-content">
-                <strong>Orange Money</strong>
-                <span>Paiement via Orange</span>
+                <strong>Orange Carta</strong>
+                <span>Paiement via Orange Carta</span>
               </div>
             </label>
           </div>
@@ -58,14 +59,28 @@ $success = $_GET['success'] ?? '';
         </form>
       </div>
     <?php elseif (empty($order['screenshot'])): ?>
-      <!-- Step 2: Show payment code + upload screenshot -->
+      <!-- Step 2: Show payment code + Arabic guide + upload -->
       <div class="payment-box">
         <h3>Code de paiement</h3>
         <div class="payment-code"><?= htmlspecialchars($order['payment_code']) ?></div>
         <p style="color:var(--text-muted);font-size:14px;margin-bottom:20px;">
-          Envoie <strong><?= (int)$order['plan_price'] ?> DH</strong> via <?= $order['payment_method'] === 'inwi' ? 'Inwi Money' : 'Orange Money' ?> au code ci-dessus.<br>
-          Prends une capture d'écran et uploads-la ci-dessous.
+          Envoie <strong><?= (int)$order['plan_price'] ?> DH</strong> via <?= $order['payment_method'] === 'inwi' ? 'Inwi Carta' : 'Orange Carta' ?> au code ci-dessus.
         </p>
+
+        <!-- Arabic Guide -->
+        <div class="guide-arabic">
+          <h4>📸 إرشادات رفع إثبات الدفع</h4>
+          <p>
+            من فضلك، بعد إجراء الدفع، ارفع صورة واضحة وكبيرة لعملية الدفع<br>
+            حتى نتمكن من التحقق منها بسرعة وتفعيل استضافتك.
+          </p>
+          <div class="guide-tips">
+            <div class="guide-tip"><span>📱</span> صورة التطبيق كاملة مع الرمز</div>
+            <div class="guide-tip"><span>🔍</span> تأكد من وضوح المبلغ والتاريخ</div>
+            <div class="guide-tip"><span>📷</span> استخدم تصوير الشاشة (Screenshot)</div>
+          </div>
+        </div>
+
         <form action="/api/upload.php" method="POST" enctype="multipart/form-data">
           <input type="hidden" name="order_id" value="<?= $order['id'] ?>">
           <div class="form-group">
@@ -90,21 +105,5 @@ $success = $_GET['success'] ?? '';
     <?php endif; ?>
   </div>
 </section>
-
-<style>
-.payment-box { background: var(--bg-card); border: 1px solid var(--border); border-radius: var(--radius-lg); padding: 32px; margin-top:16px; }
-.payment-box h3 { font-size:18px; margin-bottom:16px; }
-.payment-options { display:flex; flex-direction:column; gap:12px; margin-bottom:24px; }
-.payment-option { display:block; cursor:pointer; }
-.payment-option input { display:none; }
-.payment-option-content { display:flex; flex-direction:column; gap:4px; padding:16px; border:2px solid var(--border); border-radius:12px; transition:all 0.2s; }
-.payment-option input:checked + .payment-option-content { border-color:var(--primary); background:rgba(99,102,241,0.08); }
-.payment-option-content strong { font-size:15px; }
-.payment-option-content span { font-size:13px; color:var(--text-muted); }
-.payment-code { font-size:28px; font-weight:800; text-align:center; padding:20px; background:var(--bg); border-radius:12px; margin-bottom:16px; letter-spacing:4px; border:1px dashed var(--primary); color:var(--primary); }
-.alert { padding:14px 20px; border-radius:8px; margin-bottom:16px; font-size:14px; font-weight:500; }
-.alert-success { background:rgba(34,197,94,0.15); border:1px solid rgba(34,197,94,0.3); color:#22c55e; }
-.alert-error { background:rgba(239,68,68,0.15); border:1px solid rgba(239,68,68,0.3); color:#ef4444; }
-</style>
 
 <?php require __DIR__ . '/../templates/footer.php'; ?>

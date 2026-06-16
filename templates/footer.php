@@ -19,7 +19,7 @@
   <footer class="footer">
     <div class="container footer-inner">
       <div class="footer-brand">
-        <div class="logo"><span class="logo-icon">X</span><span class="logo-text">Xvilo Hosting</span></div>
+        <div class="logo"><span class="logo-icon">X</span><span class="logo-text"><span>Xvilo</span> Hosting</span></div>
         <p>Hébergement SA-MP premium.</p>
       </div>
       <div class="footer-links">
@@ -42,6 +42,7 @@
     </div>
   </footer>
 
+  <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
   <script src="/script.js"></script>
 </body>
 </html>

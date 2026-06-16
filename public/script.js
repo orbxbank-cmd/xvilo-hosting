@@ -57,4 +57,43 @@ document.addEventListener('DOMContentLoaded', function() {
       }
     });
   }
+
+  // GSAP Pricing Cards Hover Animation (like FoxiBytes)
+  if (typeof gsap !== 'undefined') {
+    const pricingCards = document.querySelectorAll('.pricing-card');
+    const pricingGrid = document.querySelector('.pricing-grid');
+
+    if (pricingCards.length && pricingGrid) {
+      var bgHighlight = document.createElement('div');
+      bgHighlight.id = 'bgHighlight';
+      bgHighlight.style.cssText = 'position:absolute;border-radius:20px;background:linear-gradient(90deg, rgba(255,0,0,0.08), rgba(154,3,30,0.05));transition:all 0.3s;pointer-events:none;z-index:0;';
+      pricingGrid.style.position = 'relative';
+      pricingGrid.appendChild(bgHighlight);
+
+      function moveHighlight(target) {
+        if (!target) return;
+        const rect = target.getBoundingClientRect();
+        const parentRect = pricingGrid.getBoundingClientRect();
+
+        gsap.to(bgHighlight, {
+          x: rect.left - parentRect.left,
+          y: rect.top - parentRect.top,
+          width: rect.width,
+          height: rect.height,
+          duration: 0.3,
+          ease: 'power3.out'
+        });
+      }
+
+      if (pricingCards.length > 0) {
+        moveHighlight(pricingCards[1]);
+
+        pricingCards.forEach(function(card) {
+          card.addEventListener('mouseenter', function() { moveHighlight(card); });
+        });
+
+        pricingGrid.addEventListener('mouseleave', function() { moveHighlight(pricingCards[1]); });
+      }
+    }
+  }
 });
