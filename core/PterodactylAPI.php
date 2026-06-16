@@ -1,0 +1,112 @@
+<?php
+
+class PterodactylAPI
+{
+    private string $baseUrl;
+    private string $apiKey;
+
+    public function __construct()
+    {
+        $config = require __DIR__ . '/../config/app.php';
+        $ptero = $config['pterodactyl'];
+        $this->baseUrl = rtrim($ptero['base_url'], '/');
+        $this->apiKey = $ptero['api_key'];
+    }
+
+    private function request(string $method, string $endpoint, array $data = []): ?array
+    {
+        $url = $this->baseUrl . $endpoint;
+        $ch = curl_init($url);
+        curl_setopt_array($ch, [
+            CURLOPT_RETURNTRANSFER => true,
+            CURLOPT_CUSTOMREQUEST => $method,
+            CURLOPT_HTTPHEADER => [
+                'Authorization: Bearer ' . $this->apiKey,
+                'Accept: application/json',
+                'Content-Type: application/json',
+            ],
+            CURLOPT_TIMEOUT => 15,
+            CURLOPT_CONNECTTIMEOUT => 5,
+        ]);
+
+        if (!empty($data)) {
+            curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($data));
+        }
+
+        $response = curl_exec($ch);
+        $httpCode = curl_getinfo($ch, CURLINFO_HTTP_CODE);
+        curl_close($ch);
+
+        if ($httpCode >= 200 && $httpCode < 300) {
+            return json_decode($response, true);
+        }
+
+        return null;
+    }
+
+    public function getNextAllocation(int $nodeId): ?int
+    {
+        $res = $this->request('GET', "/api/application/nodes/{$nodeId}/allocations?per_page=100");
+        if (!$res || empty($res['data'])) return null;
+
+        foreach ($res['data'] as $alloc) {
+            if (!$alloc['attributes']['assigned']) {
+                return $alloc['attributes']['id'];
+            }
+        }
+        return null;
+    }
+
+    public function createServer(array $params): ?array
+    {
+        return $this->request('POST', '/api/application/servers', $params);
+    }
+
+    public function getServer(int $serverId): ?array
+    {
+        return $this->request('GET', "/api/application/servers/{$serverId}");
+    }
+
+    public function createDatabase(int $serverId, string $hostId): ?array
+    {
+        $dbName = 'srv_' . $serverId;
+        $password = bin2hex(random_bytes(8));
+        return $this->request('POST', "/api/application/servers/{$serverId}/databases", [
+            'database' => $dbName,
+            'host' => $hostId,
+            'password' => $password,
+        ]);
+    }
+
+    public function suspendServer(int $serverId): ?array
+    {
+        return $this->request('POST', "/api/application/servers/{$serverId}/suspend");
+    }
+
+    public function unsuspendServer(int $serverId): ?array
+    {
+        return $this->request('POST', "/api/application/servers/{$serverId}/unsuspend");
+    }
+
+    public static function getPlanResources(string $plan): array
+    {
+        $plans = [
+            'SAMP I'      => ['memory' => 1024, 'disk' => 51200, 'cpu' => 100],
+            'SAMP II'      => ['memory' => 2048, 'disk' => 102400, 'cpu' => 100],
+            'SAMP III'     => ['memory' => 3072, 'disk' => 153600, 'cpu' => 100],
+            'SAMP IV MAX' => ['memory' => 4096, 'disk' => 204800, 'cpu' => 200],
+        ];
+        return $plans[$plan] ?? ['memory' => 1024, 'disk' => 51200, 'cpu' => 100];
+    }
+
+    public static function getPlanSlots(string $plan): int
+    {
+        $plans = [
+            'SAMP I'      => 250,
+            'SAMP II'      => 500,
+            'SAMP III'     => 750,
+            'SAMP IV MAX' => 1000,
+        ];
+        return $plans[$plan] ?? 250;
+    }
+}

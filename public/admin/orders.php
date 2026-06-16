@@ -13,14 +13,87 @@ if (empty($_SESSION['admin_logged_in'])) {
 }
 
 require __DIR__ . '/../../core/Database.php';
+require __DIR__ . '/../../core/PterodactylAPI.php';
 $db = Database::getInstance();
 
 $action = $_GET['action'] ?? '';
 
 if ($action === 'approve' && isset($_GET['id'])) {
     $id = (int)$_GET['id'];
-    $db->update('xvilo_orders', ['status' => 'approved'], 'id = :id', ['id' => $id]);
-    header('Location: /admin/orders.php?msg=Commande approuvée');
+    $order = $db->fetch("SELECT * FROM xvilo_orders WHERE id = ? AND status = 'pending'", [$id]);
+
+    if ($order) {
+        $ptero = new PterodactylAPI();
+        $pteroConfig = $config['pterodactyl'];
+
+        $resources = PterodactylAPI::getPlanResources($order['plan_name']);
+        $maxPlayers = PterodactylAPI::getPlanSlots($order['plan_name']);
+
+        $allocationId = $ptero->getNextAllocation($pteroConfig['node_id']);
+
+        if ($allocationId) {
+            $serverParams = [
+                'name' => $order['server_name'] ?: ('Server-' . $order['id']),
+                'user' => 1,
+                'egg' => $pteroConfig['egg_id'],
+                'docker_image' => 'temasm/samp',
+                'startup' => './samp03svr {{SERVER_PORT}} {{MAX_PLAYERS}}',
+                'environment' => [
+                    'SERVER_PORT' => '{{SERVER_PORT}}',
+                    'MAX_PLAYERS' => (string)$maxPlayers,
+                ],
+                'limits' => [
+                    'memory' => $resources['memory'],
+                    'swap' => 0,
+                    'disk' => $resources['disk'],
+                    'io' => 500,
+                    'cpu' => $resources['cpu'],
+                ],
+                'feature_limits' => [
+                    'databases' => 1,
+                    'allocations' => 1,
+                    'backups' => 0,
+                ],
+                'allocation' => [
+                    'default' => $allocationId,
+                ],
+            ];
+
+            $result = $ptero->createServer($serverParams);
+
+            if ($result && isset($result['attributes'])) {
+                $serverId = $result['attributes']['id'];
+                $serverPort = $result['attributes']['allocation']['port'] ?? 0;
+
+                $username = 'server' . $serverId;
+                $password = bin2hex(random_bytes(6));
+
+                $db->update('xvilo_orders', [
+                    'status' => 'approved',
+                    'server_id' => $serverId,
+                    'server_port' => $serverPort,
+                    'server_username' => $username,
+                    'server_password' => $password,
+                ], 'id = :id', ['id' => $id]);
+
+                $msg = 'Serveur créé #' . $serverId . ' sur le port ' . $serverPort;
+            } else {
+                $db->update('xvilo_orders', [
+                    'status' => 'approved',
+                ], 'id = :id', ['id' => $id]);
+                $msg = 'Commande approuvée (API a échoué)';
+            }
+        } else {
+            $db->update('xvilo_orders', [
+                'status' => 'approved',
+            ], 'id = :id', ['id' => $id]);
+            $msg = 'Commande approuvée (aucune allocation libre)';
+        }
+    } else {
+        $msg = 'Commande introuvable';
+    }
+
+    header('Location: /admin/orders.php?msg=' . urlencode($msg));
     exit;
 }
 
@@ -73,8 +146,8 @@ $orders = $db->fetchAll("SELECT * FROM xvilo_orders ORDER BY created_at DESC");
             <th>Plan</th>
             <th>Prix</th>
             <th>Méthode</th>
-            <th>Code</th>
-            <th>Preuve</th>
+            <th>Serveur</th>
+            <th>Accès</th>
             <th>Statut</th>
             <th>Date</th>
             <th>Action</th>
@@ -97,10 +170,18 @@ $orders = $db->fetchAll("SELECT * FROM xvilo_orders ORDER BY created_at DESC");
                 elseif ($ml === 'orange') echo 'Orange Carta';
                 else echo '-';
               ?></td>
-              <td style="font-family:monospace;font-size:12px;"><?= htmlspecialchars($o['payment_code'] ?? '-') ?></td>
               <td>
-                <?php if ($o['screenshot']): ?>
-                  <a href="<?= htmlspecialchars($o['screenshot']) ?>" target="_blank" class="screenshot-link">Voir</a>
+                <?php if ($o['server_id']): ?>
+                  #<?= $o['server_id'] ?><br>
+                  <small style="font-size:11px;color:var(--text-muted);">Port <?= $o['server_port'] ?></small>
+                <?php else: ?>
+                  -
+                <?php endif; ?>
+              </td>
+              <td style="font-size:11px;">
+                <?php if ($o['server_username']): ?>
+                  <strong>User:</strong> <?= htmlspecialchars($o['server_username']) ?><br>
+                  <strong>Pass:</strong> <?= htmlspecialchars($o['server_password']) ?>
                 <?php else: ?>
                   -
                 <?php endif; ?>
@@ -113,8 +194,10 @@ $orders = $db->fetchAll("SELECT * FROM xvilo_orders ORDER BY created_at DESC");
               <td style="font-size:11px;color:var(--text-muted);"><?= date('d/m H:i', strtotime($o['created_at'])) ?></td>
               <td>
                 <?php if ($o['status'] === 'pending'): ?>
-                  <a href="/admin/orders.php?action=approve&id=<?= $o['id'] ?>" class="btn btn-approve btn-small" onclick="return confirm('Approuver ?')">✓ Approuver</a>
+                  <a href="/admin/orders.php?action=approve&id=<?= $o['id'] ?>" class="btn btn-approve btn-small" onclick="return confirm('Approuver ? Le serveur sera créé automatiquement.')">✓ Approuver</a>
                   <a href="/admin/orders.php?action=reject&id=<?= $o['id'] ?>" class="btn btn-reject btn-small" onclick="return confirm('Refuser ?')">✕ Refuser</a>
+                <?php elseif ($o['status'] === 'approved' && $o['server_id']): ?>
+                  <span style="color:var(--success);font-size:11px;">✓ Serveur #<?= $o['server_id'] ?></span>
                 <?php else: ?>
                   <span style="color:var(--text-muted);font-size:11px;"><?= $o['status'] === 'approved' ? '✓' : '✕' ?></span>
                 <?php endif; ?>
