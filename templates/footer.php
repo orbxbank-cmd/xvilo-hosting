@@ -19,7 +19,7 @@
   <footer class="footer">
     <div class="container footer-inner">
       <div class="footer-brand">
-        <div class="logo"><span class="logo-icon">X</span><span class="logo-text"><span>Xvilo</span> Hosting</span></div>
+        <img src="https://images.foxibytes.com/logo_left.png" alt="Xvilo Hosting" style="height:32px;width:auto;margin-bottom:12px;">
         <p>Hébergement SA-MP premium.</p>
       </div>
       <div class="footer-links">

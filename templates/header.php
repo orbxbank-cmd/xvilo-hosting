@@ -6,14 +6,14 @@
   <title>Xvilo Hosting — Hébergement SA-MP</title>
   <link href="https://fonts.googleapis.com/css2?family=Sora:wght@300;400;500;600;700;800&family=Russo+One&display=swap" rel="stylesheet">
   <script src="https://cdn.tailwindcss.com"></script>
+  <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90' fill='%23ff0000'>X</text></svg>">
   <link rel="stylesheet" href="/style.css" />
 </head>
 <body>
   <nav class="navbar">
     <div class="container nav-inner">
       <a href="/" class="logo">
-        <span class="logo-icon">X</span>
-        <span class="logo-text"><span>Xvilo</span> Hosting</span>
+        <img src="https://images.foxibytes.com/logo_left.png" alt="Xvilo Hosting" style="height:44px;width:auto;">
       </a>
       <button class="mobile-toggle" id="mobileToggle" aria-label="Menu">
         <span></span><span></span><span></span>
