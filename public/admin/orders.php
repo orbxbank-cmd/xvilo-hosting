@@ -80,7 +80,7 @@ if ($action === 'reject' && isset($_GET['id'])) {
 $pendingCount = $db->fetch("SELECT COUNT(*) as c FROM xvilo_orders WHERE status = 'pending'")['c'];
 $approvedCount = $db->fetch("SELECT COUNT(*) as c FROM xvilo_orders WHERE status = 'approved'")['c'];
 $totalRevenue = $db->fetch("SELECT COALESCE(SUM(plan_price),0) as total FROM xvilo_orders WHERE status = 'approved'")['total'];
-$orders = $db->fetchAll("SELECT * FROM xvilo_orders ORDER BY created_at DESC");
+$orders = $db->fetchAll("SELECT o.*, u.email AS user_email FROM xvilo_orders o LEFT JOIN users u ON o.user_id = u.id ORDER BY o.created_at DESC");
 ?>
 <!DOCTYPE html>
 <html lang="fr">
@@ -114,6 +114,7 @@ $orders = $db->fetchAll("SELECT * FROM xvilo_orders ORDER BY created_at DESC");
           <tr>
             <th>ID</th>
             <th>Client</th>
+            <th>Compte</th>
             <th>Contact</th>
             <th>Plan</th>
             <th>Prix</th>
@@ -127,12 +128,13 @@ $orders = $db->fetchAll("SELECT * FROM xvilo_orders ORDER BY created_at DESC");
         </thead>
         <tbody>
           <?php if (empty($orders)): ?>
-            <tr><td colspan="11" style="text-align:center;color:var(--text-muted);padding:40px;">Aucune commande pour le moment.</td></tr>
+            <tr><td colspan="12" style="text-align:center;color:var(--text-muted);padding:40px;">Aucune commande pour le moment.</td></tr>
           <?php endif; ?>
           <?php foreach ($orders as $o): ?>
             <tr>
               <td>#<?= $o['id'] ?></td>
               <td><?= htmlspecialchars($o['customer_name']) ?></td>
+              <td style="font-size:11px;"><?= htmlspecialchars($o['user_email'] ?? '') ?: '-' ?></td>
               <td><?= htmlspecialchars($o['customer_contact']) ?></td>
               <td><?= htmlspecialchars($o['plan_name']) ?></td>
               <td><?= (int)$o['plan_price'] ?> DH</td>
