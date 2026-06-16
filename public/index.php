@@ -16,8 +16,18 @@
         <a href="#pricing" class="btn btn-primary btn-lg">Voir les Plans</a>
         <a href="https://discord.gg/E9HjMePMsalBUEHScBfiw4" class="btn btn-outline btn-lg" target="_blank">Discord</a>
       </div>
-      <div class="hero-payments" style="display:flex;justify-content:center;align-items:center;gap:20px;margin-bottom:40px;">
-        <img src="https://i.postimg.cc/DfpczZwx/images-(3).jpg" alt="Inwi Carta & Orange Carta" style="height:50px;width:auto;opacity:0.9;border-radius:8px;">
+      <div class="hero-payments">
+        <span>Moyens de paiement acceptés</span>
+        <div class="hero-payments-logos">
+          <div class="pm-card">
+            <img src="https://i.postimg.cc/DfpczZwx/images-(3).jpg" alt="Inwi Carta">
+            <span>Inwi Carta</span>
+          </div>
+          <div class="pm-card">
+            <img src="https://i.postimg.cc/RCpT0FZX/images-(4).jpg" alt="Orange Carta">
+            <span>Orange Carta</span>
+          </div>
+        </div>
       </div>
       <div class="hero-stats">
         <div class="stat"><span class="stat-num">99.9%</span><span class="stat-label">Uptime</span></div>
@@ -31,11 +41,14 @@
     <div class="container">
       <h2 class="section-title">Plans &amp; <span class="gradient-text">Pricing</span></h2>
       <p class="section-sub">
-        Tous les plans incluent la protection DDoS, support du plugin vocal et accès au panel Pterodactyl.<br>
-        <span style="display:inline-flex;align-items:center;gap:8px;margin-top:8px;color:var(--text-light);">
-          Paiement via <img src="https://i.postimg.cc/DfpczZwx/images-(3).jpg" alt="Inwi & Orange" style="height:24px;width:auto;border-radius:4px;"> &mdash; 100% Maroc
-        </span>
+        Tous les plans incluent la protection DDoS, support du plugin vocal et accès au panel Pterodactyl.
       </p>
+      <div class="payment-methods-badge">
+        <span>🇲🇦 Paiement 100% Marocain —</span>
+        <img src="https://i.postimg.cc/DfpczZwx/images-(3).jpg" alt="Inwi Carta">
+        <img src="https://i.postimg.cc/RCpT0FZX/images-(4).jpg" alt="Orange Carta">
+        <span>Inwi Carta &amp; Orange Carta</span>
+      </div>
       <div class="pricing-grid">
         <div class="pricing-card">
           <div class="pricing-header">
@@ -107,6 +120,32 @@
     </div>
   </section>
 
+  <section id="payment-methods" class="section payment-section">
+    <div class="container">
+      <h2 class="section-title">Moyens de <span class="gradient-text">Paiement</span></h2>
+      <p class="section-sub">Premier hébergement SA-MP au Maroc à accepter le paiement via ces méthodes.</p>
+      <div class="payment-showcase">
+        <div class="payment-showcase-card">
+          <div class="payment-showcase-img">
+            <img src="https://i.postimg.cc/DfpczZwx/images-(3).jpg" alt="Inwi Carta">
+          </div>
+          <h3>Inwi Carta</h3>
+          <p>Paiement rapide et sécurisé via Inwi Carta. Envoie le montant au code fourni et uploads la capture.</p>
+        </div>
+        <div class="payment-showcase-divider">
+          <span>OU</span>
+        </div>
+        <div class="payment-showcase-card">
+          <div class="payment-showcase-img">
+            <img src="https://i.postimg.cc/RCpT0FZX/images-(4).jpg" alt="Orange Carta">
+          </div>
+          <h3>Orange Carta</h3>
+          <p>Paiement rapide et sécurisé via Orange Carta. Envoie le montant au code fourni et uploads la capture.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
   <section id="features" class="section">
     <div class="container">
       <h2 class="section-title">Pourquoi <span class="gradient-text">Xvilo</span> ?</h2>
@@ -169,5 +208,149 @@
       </div>
     </div>
   </section>
+
+  <style>
+    .hero-payments {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 12px;
+      margin-bottom: 40px;
+    }
+    .hero-payments > span {
+      font-size: 12px;
+      color: var(--text-muted);
+      text-transform: uppercase;
+      letter-spacing: 2px;
+    }
+    .hero-payments-logos {
+      display: flex;
+      align-items: center;
+      gap: 16px;
+    }
+    .pm-card {
+      display: flex;
+      align-items: center;
+      gap: 10px;
+      background: var(--bg-alt);
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      padding: 10px 18px;
+      transition: all 0.3s;
+    }
+    .pm-card:hover {
+      border-color: var(--primary);
+    }
+    .pm-card img {
+      height: 28px;
+      width: auto;
+      border-radius: 4px;
+    }
+    .pm-card span {
+      font-size: 13px;
+      font-weight: 600;
+      color: var(--text-light);
+    }
+
+    .payment-methods-badge {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 10px;
+      margin-bottom: 40px;
+      padding: 12px 24px;
+      background: var(--bg-alt);
+      border: 1px solid var(--border);
+      border-radius: 100px;
+      font-size: 13px;
+      color: var(--text-light);
+    }
+    .payment-methods-badge img {
+      height: 22px;
+      width: auto;
+      border-radius: 4px;
+    }
+
+    .payment-section {
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border);
+      background: linear-gradient(180deg, rgba(255,0,0,0.03), transparent);
+    }
+    .payment-showcase {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      gap: 24px;
+      max-width: 800px;
+      margin: 0 auto;
+    }
+    .payment-showcase-card {
+      flex: 1;
+      background: var(--bg-alt);
+      border: 1px solid var(--border);
+      border-left: 2px solid var(--primary);
+      border-radius: var(--radius-lg);
+      padding: 32px;
+      text-align: center;
+      transition: all 0.3s;
+    }
+    .payment-showcase-card:hover {
+      border-color: var(--primary);
+      transform: translateY(-2px);
+    }
+    .payment-showcase-img {
+      margin-bottom: 16px;
+    }
+    .payment-showcase-img img {
+      height: 48px;
+      width: auto;
+      border-radius: 6px;
+    }
+    .payment-showcase-card h3 {
+      font-size: 18px;
+      font-family: var(--secondary-font);
+      margin-bottom: 8px;
+    }
+    .payment-showcase-card p {
+      font-size: 13px;
+      color: var(--text-muted);
+      line-height: 1.7;
+    }
+    .payment-showcase-divider {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .payment-showcase-divider span {
+      background: var(--bg-alt);
+      border: 1px solid var(--border);
+      border-radius: 50%;
+      width: 44px;
+      height: 44px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      font-size: 12px;
+      font-weight: 700;
+      color: var(--text-muted);
+    }
+
+    @media (max-width: 768px) {
+      .payment-showcase {
+        flex-direction: column;
+      }
+      .payment-methods-badge {
+        flex-wrap: wrap;
+        border-radius: 12px;
+        padding: 12px 16px;
+      }
+      .pm-card {
+        padding: 8px 12px;
+      }
+      .pm-card img {
+        height: 22px;
+      }
+    }
+  </style>
 
 <?php require __DIR__ . '/../templates/footer.php'; ?>
