@@ -1,5 +1,5 @@
 <?php
-require __DIR__ . '/../core/Database.php';
+require __DIR__ . '/../../core/Database.php';
 
 $order_id = (int)($_POST['order_id'] ?? 0);
 $method = $_POST['method'] ?? '';
@@ -17,7 +17,6 @@ if (!$order) {
     exit;
 }
 
-// Generate a random payment code
 $paymentCode = strtoupper(substr(md5(uniqid()), 0, 8)) . '-' . $order_id;
 
 $db->update('xvilo_orders', [

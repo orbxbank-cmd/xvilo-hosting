@@ -1,7 +1,7 @@
 <?php
 session_start();
 
-$config = require __DIR__ . '/../config/app.php';
+$config = require __DIR__ . '/../../config/app.php';
 
 if (empty($_SESSION['admin_logged_in'])) {
     $code = $_POST['code'] ?? '';
@@ -12,7 +12,7 @@ if (empty($_SESSION['admin_logged_in'])) {
     $_SESSION['admin_logged_in'] = true;
 }
 
-require __DIR__ . '/../core/Database.php';
+require __DIR__ . '/../../core/Database.php';
 $db = Database::getInstance();
 
 $action = $_GET['action'] ?? '';
@@ -32,7 +32,6 @@ if ($action === 'reject' && isset($_GET['id'])) {
     exit;
 }
 
-// stats
 $pendingCount = $db->fetch("SELECT COUNT(*) as c FROM xvilo_orders WHERE status = 'pending'")['c'];
 $approvedCount = $db->fetch("SELECT COUNT(*) as c FROM xvilo_orders WHERE status = 'approved'")['c'];
 $totalRevenue = $db->fetch("SELECT COALESCE(SUM(plan_price),0) as total FROM xvilo_orders WHERE status = 'approved'")['total'];
@@ -135,8 +134,8 @@ $orders = $db->fetchAll("SELECT * FROM xvilo_orders ORDER BY created_at DESC");
             <td style="font-size:11px;color:var(--text-muted);"><?= date('d/m H:i', strtotime($o['created_at'])) ?></td>
             <td>
               <?php if ($o['status'] === 'pending'): ?>
-                <a href="?action=approve&id=<?= $o['id'] ?>" class="btn btn-approve btn-small" onclick="return confirm('Approuver cette commande ?')">✓ Approuver</a>
-                <a href="?action=reject&id=<?= $o['id'] ?>" class="btn btn-reject btn-small" onclick="return confirm('Refuser cette commande ?')">✕ Refuser</a>
+                <a href="/admin/orders.php?action=approve&id=<?= $o['id'] ?>" class="btn btn-approve btn-small" onclick="return confirm('Approuver ?')">✓ Approuver</a>
+                <a href="/admin/orders.php?action=reject&id=<?= $o['id'] ?>" class="btn btn-reject btn-small" onclick="return confirm('Refuser ?')">✕ Refuser</a>
               <?php else: ?>
                 <span style="color:var(--text-muted);font-size:11px;"><?= $o['status'] === 'approved' ? '✓' : '✕' ?></span>
               <?php endif; ?>

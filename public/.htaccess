@@ -1,8 +1,4 @@
 RewriteEngine On
-
-# Allow existing files and directories
 RewriteCond %{REQUEST_FILENAME} !-f
 RewriteCond %{REQUEST_FILENAME} !-d
-
-# Route everything else to index.php except known paths
-RewriteRule ^(?!admin/|api/|uploads/).* index.php [L]
+RewriteRule ^ index.php [L]

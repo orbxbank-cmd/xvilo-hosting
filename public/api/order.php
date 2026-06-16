@@ -1,5 +1,5 @@
 <?php
-require __DIR__ . '/../core/Database.php';
+require __DIR__ . '/../../core/Database.php';
 
 $plan = $_POST['plan'] ?? '';
 $price = (int)($_POST['price'] ?? 0);
