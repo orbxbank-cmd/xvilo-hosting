@@ -13,7 +13,7 @@
   <nav class="navbar">
     <div class="container nav-inner">
       <a href="/" class="logo">
-        <img src="https://i.postimg.cc/L5g2L5Kj/1781573065466.png" alt="Xvilo Hosting" style="height:44px;width:auto;">
+        <img src="https://i.postimg.cc/hGHBgg77/In-Shot-20260616-023140548.jpg" alt="Xvilo Hosting" style="height:44px;width:auto;">
       </a>
       <button class="mobile-toggle" id="mobileToggle" aria-label="Menu">
         <span></span><span></span><span></span>
