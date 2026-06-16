@@ -1,5 +1,6 @@
 <?php
 require __DIR__ . '/../../core/Database.php';
+require __DIR__ . '/../../core/Auth.php';
 
 $plan = $_POST['plan'] ?? '';
 $price = (int)($_POST['price'] ?? 0);
@@ -15,8 +16,12 @@ if (!isset($plans[$plan]) || $plans[$plan] !== $price || !$name || !$contact || 
     exit;
 }
 
+Auth::init();
+$userId = Auth::userId();
+
 $db = Database::getInstance();
 $orderId = $db->insert('xvilo_orders', [
+    'user_id'         => $userId,
     'plan_name'       => $plan,
     'plan_price'      => $price,
     'customer_name'   => $name,

@@ -10,6 +10,11 @@
   <link rel="stylesheet" href="/style.css" />
 </head>
 <body>
+  <?php
+  require_once __DIR__ . '/../core/Auth.php';
+  Auth::init();
+  $currentUser = Auth::user();
+  ?>
   <nav class="navbar">
     <div class="container nav-inner">
       <a href="/" class="logo">
@@ -22,7 +27,15 @@
         <li><a href="/#pricing">Plans</a></li>
         <li><a href="/#features">Features</a></li>
         <li><a href="/#faq">FAQ</a></li>
-        <li><a href="https://discord.gg/E9HjMePMsalBUEHScBfiw4" class="btn btn-discord" target="_blank">Discord</a></li>
+        <?php if ($currentUser): ?>
+          <li><a href="/dashboard.php">Dashboard</a></li>
+          <li><span style="color:var(--accent);font-size:13px;"><?= htmlspecialchars($currentUser['name']) ?></span></li>
+          <li><a href="/auth/logout.php" class="btn btn-discord">Déconnexion</a></li>
+        <?php else: ?>
+          <li><a href="/auth/login.php">Connexion</a></li>
+          <li><a href="/auth/register.php" class="btn btn-primary" style="padding:8px 18px;">S'inscrire</a></li>
+        <?php endif; ?>
+        <li><a href="https://chat.whatsapp.com/E9HjMePMsalBUEHScBfiw4" class="btn btn-discord" target="_blank">WhatsApp</a></li>
       </ul>
     </div>
   </nav>

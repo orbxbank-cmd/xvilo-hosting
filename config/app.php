@@ -19,4 +19,9 @@ return [
     'admin_code'  => getenv('ADMIN_CODE') ?: 'admin123',
     'app_url'     => getenv('APP_URL') ?: 'https://xvilo-hosting.onrender.com',
     'upload_max'  => 10 * 1024 * 1024,
+    'google_oauth' => [
+        'client_id'     => getenv('GOOGLE_CLIENT_ID') ?: '',
+        'client_secret' => getenv('GOOGLE_CLIENT_SECRET') ?: '',
+        'redirect_uri'  => getenv('APP_URL') ?: 'https://xvilo-hosting.onrender.com',
+    ],
 ];
