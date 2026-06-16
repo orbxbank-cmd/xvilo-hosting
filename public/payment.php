@@ -42,16 +42,22 @@ $methodLabel = $order['payment_method'] === 'inwi' ? 'Inwi Carta' : ($order['pay
           <div class="payment-options">
             <label class="payment-option">
               <input type="radio" name="method" value="inwi" required>
-              <div class="payment-option-content">
-                <strong>Inwi Carta</strong>
-                <span>Paiement via Inwi Carta</span>
+              <div class="payment-option-content" style="flex-direction:row;align-items:center;gap:12px;">
+                <img src="https://i.postimg.cc/DfpczZwx/images-(3).jpg" alt="Inwi" style="height:32px;width:auto;border-radius:4px;">
+                <div>
+                  <strong>Inwi Carta</strong>
+                  <span>Paiement via Inwi Carta</span>
+                </div>
               </div>
             </label>
             <label class="payment-option">
               <input type="radio" name="method" value="orange" required>
-              <div class="payment-option-content">
-                <strong>Orange Carta</strong>
-                <span>Paiement via Orange Carta</span>
+              <div class="payment-option-content" style="flex-direction:row;align-items:center;gap:12px;">
+                <img src="https://i.postimg.cc/DfpczZwx/images-(3).jpg" alt="Orange" style="height:32px;width:auto;border-radius:4px;">
+                <div>
+                  <strong>Orange Carta</strong>
+                  <span>Paiement via Orange Carta</span>
+                </div>
               </div>
             </label>
           </div>

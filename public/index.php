@@ -8,17 +8,21 @@
         Welcome to <br><span>Xvilo Hosting</span>
       </h1>
       <p class="hero-sub">
-        Hébergement SA-MP performant avec protection DDoS, plugin vocal, et panel Pterodactyl.<br>
-        Paiement via Inwi Carta &amp; Orange Carta.
+        <strong style="color:var(--color-one);">Premier hébergement SA-MP au Maroc</strong><br>
+        Accepte Inwi Carta &amp; Orange Carta. Hébergement performant avec protection DDoS, plugin vocal, et panel Pterodactyl.<br>
+        <span style="color:var(--text-light);font-size:15px;">🇲🇦 100% Marocain — Paiement en DH — Support Darija</span>
       </p>
       <div class="hero-cta">
         <a href="#pricing" class="btn btn-primary btn-lg">Voir les Plans</a>
         <a href="https://discord.gg/E9HjMePMsalBUEHScBfiw4" class="btn btn-outline btn-lg" target="_blank">Discord</a>
       </div>
+      <div class="hero-payments" style="display:flex;justify-content:center;align-items:center;gap:20px;margin-bottom:40px;">
+        <img src="https://i.postimg.cc/DfpczZwx/images-(3).jpg" alt="Inwi Carta & Orange Carta" style="height:50px;width:auto;opacity:0.9;border-radius:8px;">
+      </div>
       <div class="hero-stats">
         <div class="stat"><span class="stat-num">99.9%</span><span class="stat-label">Uptime</span></div>
         <div class="stat"><span class="stat-num">4</span><span class="stat-label">Plans</span></div>
-        <div class="stat"><span class="stat-num">Instant</span><span class="stat-label">Setup</span></div>
+        <div class="stat"><span class="stat-num">🇲🇦</span><span class="stat-label">Maroc First</span></div>
       </div>
     </div>
   </section>
@@ -26,7 +30,12 @@
   <section id="pricing" class="section">
     <div class="container">
       <h2 class="section-title">Plans &amp; <span class="gradient-text">Pricing</span></h2>
-      <p class="section-sub">Tous les plans incluent la protection DDoS, support du plugin vocal et accès au panel Pterodactyl.</p>
+      <p class="section-sub">
+        Tous les plans incluent la protection DDoS, support du plugin vocal et accès au panel Pterodactyl.<br>
+        <span style="display:inline-flex;align-items:center;gap:8px;margin-top:8px;color:var(--text-light);">
+          Paiement via <img src="https://i.postimg.cc/DfpczZwx/images-(3).jpg" alt="Inwi & Orange" style="height:24px;width:auto;border-radius:4px;"> &mdash; 100% Maroc
+        </span>
+      </p>
       <div class="pricing-grid">
         <div class="pricing-card">
           <div class="pricing-header">
@@ -119,14 +128,14 @@
           <p>Support du plugin vocal SA-MP intégré. Aucune configuration supplémentaire.</p>
         </div>
         <div class="feature-card">
+          <div class="feature-icon">🇲🇦</div>
+          <h3>Paiement Marocain</h3>
+          <p>Premier hébergement SA-MP à accepter Inwi Carta &amp; Orange Carta. Paiement en DH, 100% marocain.</p>
+        </div>
+        <div class="feature-card">
           <div class="feature-icon">📂</div>
           <h3>Panel Pterodactyl</h3>
           <p>Contrôle total via Pterodactyl — fichiers, console, base de données.</p>
-        </div>
-        <div class="feature-card">
-          <div class="feature-icon">🇪🇺</div>
-          <h3>Localisation UE</h3>
-          <p>Serveurs hébergés en Allemagne pour une faible latence en Europe et MENA.</p>
         </div>
         <div class="feature-card">
           <div class="feature-icon">💬</div>
