@@ -1,6 +1,5 @@
 <?php
 require __DIR__ . '/../core/Auth.php';
-require __DIR__ . '/../core/Database.php';
 Auth::init();
 $user = Auth::user();
 
