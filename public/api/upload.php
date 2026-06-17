@@ -1,4 +1,5 @@
 <?php
+ob_start();
 require __DIR__ . '/../../core/Database.php';
 
 $order_id = (int)($_POST['order_id'] ?? 0);
@@ -31,9 +32,13 @@ if ($file['size'] > 10 * 1024 * 1024) {
 }
 
 $uploadDir = __DIR__ . '/../uploads/proofs/';
-if (!is_dir($uploadDir)) mkdir($uploadDir, 0755, true);
+if (!is_dir($uploadDir)) @mkdir($uploadDir, 0755, true);
 $filename = 'order_' . $order_id . '_' . time() . '.' . $ext;
-move_uploaded_file($file['tmp_name'], $uploadDir . $filename);
+$dest = $uploadDir . $filename;
+if (!@move_uploaded_file($file['tmp_name'], $dest)) {
+    header('Location: /payment.php?id=' . $order_id . '&error=Erreur lors du téléchargement');
+    exit;
+}
 
 $db->update('xvilo_orders', [
     'screenshot' => '/uploads/proofs/' . $filename,
