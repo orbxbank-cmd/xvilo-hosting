@@ -1,0 +1,1 @@
+ALTER TABLE xvilo_orders ADD COLUMN IF NOT EXISTS expires_at TIMESTAMP NULL DEFAULT NULL AFTER server_password;

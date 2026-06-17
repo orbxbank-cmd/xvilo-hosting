@@ -46,6 +46,7 @@ if ($action === 'approve' && isset($_GET['id'])) {
                     'server_port' => 0,
                     'server_username' => $username,
                     'server_password' => $password,
+                    'expires_at' => date('Y-m-d H:i:s', strtotime('+30 days')),
                 ];
 
                 $dbResult = $ptero->createDatabase($serverId, $pteroConfig['dbhost_id']);

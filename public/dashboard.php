@@ -13,7 +13,7 @@ $orders = $db->fetchAll(
 require __DIR__ . '/../templates/header.php';
 ?>
 <section class="section" style="padding-top:120px;">
-  <div class="container" style="max-width:900px;">
+  <div class="container" style="max-width:1100px;">
     <h2 class="section-title">Tableau de <span class="gradient-text">bord</span></h2>
     <p class="section-sub">Bienvenue, <strong><?= htmlspecialchars($user['name']) ?></strong> !</p>
 
@@ -33,7 +33,8 @@ require __DIR__ . '/../templates/header.php';
               <th>Statut</th>
               <th>Connexion</th>
               <th>Base de données</th>
-              <th>Date</th>
+              <th>Expire</th>
+              <th>Action</th>
             </tr>
           </thead>
           <tbody>
@@ -67,7 +68,18 @@ require __DIR__ . '/../templates/header.php';
                     <span style="color:var(--text-muted);">-</span>
                   <?php endif; ?>
                 </td>
-                <td style="font-size:11px;color:var(--text-muted);"><?= date('d/m/Y', strtotime($o['created_at'])) ?></td>
+                <td style="font-size:12px;color:var(--text-muted);">
+                  <?php if ($o['expires_at']): ?>
+                    <span class="exp-countdown" data-expires="<?= strtotime($o['expires_at']) ?>"></span>
+                  <?php else: ?>
+                    -
+                  <?php endif; ?>
+                </td>
+                <td>
+                  <?php if ($o['server_id'] && $o['status'] === 'approved'): ?>
+                    <a href="/server.php?id=<?= $o['id'] ?>" class="btn btn-primary btn-small">Panel</a>
+                  <?php endif; ?>
+                </td>
               </tr>
             <?php endforeach; ?>
           </tbody>
@@ -76,4 +88,20 @@ require __DIR__ . '/../templates/header.php';
     <?php endif; ?>
   </div>
 </section>
+<script>
+document.querySelectorAll('.exp-countdown').forEach(function(el) {
+  function tick() {
+    var expires = parseInt(el.dataset.expires) * 1000;
+    var diff = expires - Date.now();
+    if (diff <= 0) { el.textContent = 'Expiré'; el.style.color = '#ef4444'; return; }
+    var d = Math.floor(diff / 86400000);
+    var h = Math.floor((diff % 86400000) / 3600000);
+    var m = Math.floor((diff % 3600000) / 60000);
+    var s = Math.floor((diff % 60000) / 1000);
+    el.textContent = d + 'j ' + h + 'h ' + m + 'm ' + s + 's';
+  }
+  tick();
+  setInterval(tick, 1000);
+});
+</script>
 <?php require __DIR__ . '/../templates/footer.php'; ?>

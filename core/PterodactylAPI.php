@@ -136,6 +136,12 @@ class PterodactylAPI
         return $this->request('POST', "/api/application/servers/{$serverId}/unsuspend");
     }
 
+    public function deleteServer(int $serverId): bool
+    {
+        $result = $this->request('DELETE', "/api/application/servers/{$serverId}");
+        return $result === [] || $result === null;
+    }
+
     public static function getPlanResources(string $plan): array
     {
         $plans = [
