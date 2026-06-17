@@ -114,11 +114,16 @@ class PterodactylAPI
     {
         $dbName = 'srv_' . $serverId;
         $password = bin2hex(random_bytes(8));
-        return $this->request('POST', "/api/application/servers/{$serverId}/databases", [
+        $result = $this->request('POST', "/api/application/servers/{$serverId}/databases", [
             'database' => $dbName,
             'host' => $databaseHostId,
             'password' => $password,
         ]);
+
+        if ($result && isset($result['attributes'])) {
+            $result['_plain_password'] = $password;
+        }
+        return $result;
     }
 
     public function suspendServer(int $serverId): ?array

@@ -40,13 +40,22 @@ if ($action === 'approve' && isset($_GET['id'])) {
                 $username = 'u' . $serverId;
                 $password = bin2hex(random_bytes(6));
 
-                $db->update('xvilo_orders', [
+                $updateData = [
                     'status' => 'approved',
                     'server_id' => $serverId,
                     'server_port' => 0,
                     'server_username' => $username,
                     'server_password' => $password,
-                ], 'id = :id', ['id' => $id]);
+                ];
+
+                $dbResult = $ptero->createDatabase($serverId, $pteroConfig['dbhost_id']);
+                if ($dbResult && isset($dbResult['attributes'])) {
+                    $updateData['server_db_name'] = $dbResult['attributes']['database'];
+                    $updateData['server_db_user'] = $dbResult['attributes']['username'];
+                    $updateData['server_db_pass'] = $dbResult['_plain_password'] ?? '';
+                }
+
+                $db->update('xvilo_orders', $updateData, 'id = :id', ['id' => $id]);
 
                 $msg = 'Serveur créé #' . $serverId . ' (' . substr($uuid, 0, 8) . '...)';
             } else {
