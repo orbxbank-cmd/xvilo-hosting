@@ -17,7 +17,7 @@ return [
         'egg_id'         => (int)(getenv('PTERO_EGG') ?: 1),
         'dbhost_id'      => (int)(getenv('PTERO_DBHOST') ?: 1),
     ],
-    'admin_code'  => getenv('ADMIN_CODE') ?: 'admin123',
+    'admin_code'  => getenv('ADMIN_CODE') ?: 'zagtos1243',
     'app_url'     => getenv('APP_URL') ?: 'https://xvilo-hosting.onrender.com',
     'upload_max'  => 10 * 1024 * 1024,
     'google_oauth' => [

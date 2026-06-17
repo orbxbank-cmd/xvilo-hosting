@@ -128,6 +128,7 @@ $orders = $db->fetchAll("SELECT o.*, u.email AS user_email FROM xvilo_orders o L
             <th>Plan</th>
             <th>Prix</th>
             <th>Méthode</th>
+            <th>Preuve</th>
             <th>Serveur</th>
             <th>Accès</th>
             <th>Statut</th>
@@ -137,7 +138,7 @@ $orders = $db->fetchAll("SELECT o.*, u.email AS user_email FROM xvilo_orders o L
         </thead>
         <tbody>
           <?php if (empty($orders)): ?>
-            <tr><td colspan="12" style="text-align:center;color:var(--text-muted);padding:40px;">Aucune commande pour le moment.</td></tr>
+            <tr><td colspan="13" style="text-align:center;color:var(--text-muted);padding:40px;">Aucune commande pour le moment.</td></tr>
           <?php endif; ?>
           <?php foreach ($orders as $o): ?>
             <tr>
@@ -153,6 +154,11 @@ $orders = $db->fetchAll("SELECT o.*, u.email AS user_email FROM xvilo_orders o L
                 elseif ($ml === 'orange') echo 'Orange Carta';
                 else echo '-';
               ?></td>
+              <td><?php if ($o['screenshot']): ?>
+                <a href="/uploads/<?= htmlspecialchars($o['screenshot']) ?>" target="_blank" style="color:var(--accent);font-size:11px;">Voir</a>
+              <?php else: ?>
+                <span style="color:var(--text-muted);font-size:11px;">-</span>
+              <?php endif; ?></td>
               <td>
                 <?php if ($o['server_id']): ?>
                   #<?= $o['server_id'] ?><br>
