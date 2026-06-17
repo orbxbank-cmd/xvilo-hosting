@@ -19,6 +19,11 @@ if (!isset($plans[$plan]) || $plans[$plan] !== $price || !$name || !$contact || 
 Auth::init();
 $userId = Auth::userId();
 
+if (!$userId) {
+    header('Location: /auth/login.php');
+    exit;
+}
+
 $db = Database::getInstance();
 $orderId = $db->insert('xvilo_orders', [
     'user_id'         => $userId,

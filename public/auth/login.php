@@ -3,6 +3,7 @@ require __DIR__ . '/../../core/Database.php';
 require __DIR__ . '/../../core/Auth.php';
 
 $error = '';
+$redirect = trim($_POST['redirect'] ?? $_GET['redirect'] ?? '/dashboard.php');
 
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $email = trim($_POST['email'] ?? '');
@@ -14,7 +15,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $userId = Auth::loginByEmail($email, $password);
         if ($userId) {
             Auth::login($userId);
-            header('Location: /dashboard.php');
+            header('Location: ' . $redirect);
             exit;
         }
         $error = 'Email ou mot de passe incorrect.';
@@ -36,6 +37,7 @@ require __DIR__ . '/../../templates/header.php';
     <?php endif; ?>
 
     <form class="order-form" method="POST">
+      <input type="hidden" name="redirect" value="<?= htmlspecialchars($redirect) ?>">
       <div class="form-group">
         <label>Email</label>
         <input type="email" name="email" required placeholder="ton@email.com">

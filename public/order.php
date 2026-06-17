@@ -1,5 +1,7 @@
 <?php
-require __DIR__ . '/../templates/header.php';
+require __DIR__ . '/../core/Auth.php';
+Auth::init();
+$user = Auth::user();
 
 $plan = $_GET['plan'] ?? '';
 $price = $_GET['price'] ?? '';
@@ -9,11 +11,18 @@ if (!isset($plans[$plan])) {
     header('Location: /');
     exit;
 }
+
+if (!$user) {
+    header('Location: /auth/login.php?redirect=/order.php?plan=' . urlencode($plan) . '&price=' . urlencode($price));
+    exit;
+}
+
+require __DIR__ . '/../templates/header.php';
 ?>
 <section class="section" style="padding-top:120px;">
   <div class="container" style="max-width:600px;">
     <h2 class="section-title">Commander <span class="gradient-text"><?= htmlspecialchars($plan) ?></span></h2>
-    <p class="section-sub">Plan à <strong><?= $price ?> DH/mois</strong> — Remplis le formulaire ci-dessous.</p>
+    <p class="section-sub">Plan à <strong><?= $price ?> DH/mois</strong></p>
 
     <form class="order-form" action="/api/order.php" method="POST">
       <input type="hidden" name="plan" value="<?= htmlspecialchars($plan) ?>">
@@ -21,7 +30,7 @@ if (!isset($plans[$plan])) {
 
       <div class="form-group">
         <label>Ton nom / Pseudo</label>
-        <input type="text" name="name" required placeholder="Ex: Zagtos">
+        <input type="text" name="name" required placeholder="Ex: Zagtos" value="<?= htmlspecialchars($user['name']) ?>">
       </div>
       <div class="form-group">
         <label>Contact (WhatsApp ou Discord)</label>

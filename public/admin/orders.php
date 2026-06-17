@@ -156,7 +156,7 @@ $orders = $db->fetchAll("SELECT o.*, u.email AS user_email FROM xvilo_orders o L
                 else echo '-';
               ?></td>
               <td><?php if ($o['screenshot']): ?>
-                <a href="/uploads/<?= htmlspecialchars($o['screenshot']) ?>" target="_blank" style="color:var(--accent);font-size:11px;">Voir</a>
+                <a href="<?= htmlspecialchars($o['screenshot']) ?>" target="_blank" style="color:var(--accent);font-size:11px;">Voir</a>
               <?php else: ?>
                 <span style="color:var(--text-muted);font-size:11px;">-</span>
               <?php endif; ?></td>
