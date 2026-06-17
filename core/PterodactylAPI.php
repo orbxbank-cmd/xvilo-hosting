@@ -151,23 +151,17 @@ class PterodactylAPI
 
     public static function getPlanResources(string $plan): array
     {
-        $plans = [
-            'SAMP I'      => ['memory' => 1024, 'disk' => 51200, 'cpu' => 100],
-            'SAMP II'      => ['memory' => 2048, 'disk' => 102400, 'cpu' => 100],
-            'SAMP III'     => ['memory' => 3072, 'disk' => 153600, 'cpu' => 100],
-            'SAMP IV MAX' => ['memory' => 4096, 'disk' => 204800, 'cpu' => 200],
-        ];
-        return $plans[$plan] ?? ['memory' => 1024, 'disk' => 51200, 'cpu' => 100];
+        return ['memory' => 128, 'disk' => 2048, 'cpu' => 100];
     }
 
     public static function getPlanSlots(string $plan): int
     {
         $plans = [
-            'SAMP I'      => 250,
-            'SAMP II'      => 500,
-            'SAMP III'     => 750,
-            'SAMP IV MAX' => 1000,
+            'SAMP I'      => 40,
+            'SAMP II'      => 60,
+            'SAMP III'     => 80,
+            'SAMP IV MAX' => 100,
         ];
-        return $plans[$plan] ?? 250;
+        return $plans[$plan] ?? 40;
     }
 }

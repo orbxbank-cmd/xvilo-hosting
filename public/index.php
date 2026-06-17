@@ -56,10 +56,10 @@
             <div class="price"><span class="currency">DH</span>15<span class="period">/mo</span></div>
           </div>
           <ul class="pricing-features">
-            <li><strong>250</strong> Player Slots</li>
-            <li>1x CPU Thread</li>
-            <li>1 GB DDR5 RAM</li>
-            <li>50 GB NVMe SSD</li>
+            <li><strong>40</strong> Player Slots</li>
+            <li>128 MB RAM</li>
+            <li>2 GB SSD</li>
+            <li>1 vCPU Thread</li>
             <li>17 Tbit DDoS Protection</li>
             <li>Voice Plugin Support</li>
             <li>Pterodactyl Panel</li>
@@ -73,10 +73,10 @@
             <div class="price"><span class="currency">DH</span>20<span class="period">/mo</span></div>
           </div>
           <ul class="pricing-features">
-            <li><strong>500</strong> Player Slots</li>
-            <li>1x CPU Thread</li>
-            <li>2 GB DDR5 RAM</li>
-            <li>100 GB NVMe SSD</li>
+            <li><strong>60</strong> Player Slots</li>
+            <li>128 MB RAM</li>
+            <li>2 GB SSD</li>
+            <li>1 vCPU Thread</li>
             <li>17 Tbit DDoS Protection</li>
             <li>Voice Plugin Support</li>
             <li>Pterodactyl Panel</li>
@@ -89,10 +89,10 @@
             <div class="price"><span class="currency">DH</span>30<span class="period">/mo</span></div>
           </div>
           <ul class="pricing-features">
-            <li><strong>750</strong> Player Slots</li>
-            <li>1x CPU Thread</li>
-            <li>3 GB DDR5 RAM</li>
-            <li>150 GB NVMe SSD</li>
+            <li><strong>80</strong> Player Slots</li>
+            <li>128 MB RAM</li>
+            <li>2 GB SSD</li>
+            <li>1 vCPU Thread</li>
             <li>17 Tbit DDoS Protection</li>
             <li>Voice Plugin Support</li>
             <li>Pterodactyl Panel</li>
@@ -105,10 +105,10 @@
             <div class="price"><span class="currency">DH</span>45<span class="period">/mo</span></div>
           </div>
           <ul class="pricing-features">
-            <li><strong>1000</strong> Player Slots</li>
-            <li>2x CPU Threads</li>
-            <li>4 GB DDR5 RAM</li>
-            <li>200 GB NVMe SSD</li>
+            <li><strong>100</strong> Player Slots</li>
+            <li>128 MB RAM</li>
+            <li>2 GB SSD</li>
+            <li>1 vCPU Thread</li>
             <li>17 Tbit DDoS Protection</li>
             <li>Voice Plugin Support</li>
             <li>Pterodactyl Panel</li>
