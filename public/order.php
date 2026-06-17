@@ -28,7 +28,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $gamemode = trim($_POST['gamemode'] ?? '');
 
     if (!isset($plans[$postPlan]) || $plans[$postPlan] !== $postPrice || !$name || !$contact || !$server_name) {
-        $error = 'Tous les champs sont requis.';
+        $error = 'Tous les champs sont requis. (plan=' . htmlspecialchars($postPlan) . ', price=' . $postPrice . ', name=' . htmlspecialchars($name) . ', contact=' . htmlspecialchars($contact) . ', server=' . htmlspecialchars($server_name) . ')';
     } else {
         try {
             $db = Database::getInstance();
