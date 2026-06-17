@@ -18,9 +18,14 @@ $db = Database::getInstance();
 
 $action = $_GET['action'] ?? '';
 
-if ($action === 'approve' && isset($_GET['id'])) {
+if (($action === 'approve' || $action === 'retry') && isset($_GET['id'])) {
     $id = (int)$_GET['id'];
-    $order = $db->fetch("SELECT * FROM xvilo_orders WHERE id = ? AND status = 'pending'", [$id]);
+
+    if ($action === 'retry') {
+        $order = $db->fetch("SELECT * FROM xvilo_orders WHERE id = ? AND status = 'approved' AND server_id IS NULL", [$id]);
+    } else {
+        $order = $db->fetch("SELECT * FROM xvilo_orders WHERE id = ? AND status = 'pending'", [$id]);
+    }
 
     if ($order) {
         $ptero = new PterodactylAPI();
@@ -36,6 +41,7 @@ if ($action === 'approve' && isset($_GET['id'])) {
             if ($result && isset($result['attributes'])) {
                 $serverId = $result['attributes']['id'];
                 $uuid = $result['attributes']['uuid'];
+                $allocPort = $result['attributes']['allocation'] ?? 0;
 
                 $username = 'u' . $serverId;
                 $password = bin2hex(random_bytes(6));
@@ -43,7 +49,7 @@ if ($action === 'approve' && isset($_GET['id'])) {
                 $updateData = [
                     'status' => 'approved',
                     'server_id' => $serverId,
-                    'server_port' => 0,
+                    'server_port' => $allocPort,
                     'server_username' => $username,
                     'server_password' => $password,
                     'expires_at' => date('Y-m-d H:i:s', strtotime('+30 days')),
@@ -58,18 +64,15 @@ if ($action === 'approve' && isset($_GET['id'])) {
 
                 $db->update('xvilo_orders', $updateData, 'id = :id', ['id' => $id]);
 
-                $msg = 'Serveur créé #' . $serverId . ' (' . substr($uuid, 0, 8) . '...)';
+                $msg = 'Serveur créé #' . $serverId;
             } else {
                 $db->update('xvilo_orders', [
                     'status' => 'approved',
                 ], 'id = :id', ['id' => $id]);
-                $msg = 'Commande approuvée (API a échoué)';
+                $msg = 'Approuvé (API a échoué)';
             }
         } else {
-            $db->update('xvilo_orders', [
-                'status' => 'approved',
-            ], 'id = :id', ['id' => $id]);
-            $msg = 'Commande approuvée (aucune allocation libre)';
+            $msg = 'Aucune allocation libre';
         }
     } else {
         $msg = 'Commande introuvable';
@@ -167,8 +170,8 @@ $orders = $db->fetchAll("SELECT o.*, u.email AS user_email FROM xvilo_orders o L
               <?php endif; ?></td>
               <td>
                 <?php if ($o['server_id']): ?>
-                  #<?= $o['server_id'] ?><br>
-                  <small style="font-size:11px;color:var(--text-muted);">Port <?= $o['server_port'] ?></small>
+                    #<?= $o['server_id'] ?><br>
+                  <small style="font-size:11px;color:var(--text-muted);">Port <?= $o['server_port'] ?: '?' ?></small>
                 <?php else: ?>
                   -
                 <?php endif; ?>
@@ -193,6 +196,8 @@ $orders = $db->fetchAll("SELECT o.*, u.email AS user_email FROM xvilo_orders o L
                   <a href="/admin/orders.php?action=reject&id=<?= $o['id'] ?>" class="btn btn-reject btn-small" onclick="return confirm('Refuser ?')">✕ Refuser</a>
                 <?php elseif ($o['status'] === 'approved' && $o['server_id']): ?>
                   <span style="color:var(--success);font-size:11px;">✓ Serveur #<?= $o['server_id'] ?></span>
+                <?php elseif ($o['status'] === 'approved' && !$o['server_id']): ?>
+                  <a href="/admin/orders.php?action=retry&id=<?= $o['id'] ?>" class="btn btn-approve btn-small" onclick="return confirm('Réessayer la création du serveur ?')">↻ Réessayer</a>
                 <?php else: ?>
                   <span style="color:var(--text-muted);font-size:11px;"><?= $o['status'] === 'approved' ? '✓' : '✕' ?></span>
                 <?php endif; ?>

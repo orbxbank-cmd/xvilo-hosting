@@ -76,6 +76,9 @@ class PterodactylAPI
         $resources = self::getPlanResources($order['plan_name']);
         $maxPlayers = self::getPlanSlots($order['plan_name']);
 
+        $allocInfo = $this->request('GET', "/api/application/nodes/2/allocations/{$allocationId}");
+        $allocPort = $allocInfo['attributes']['port'] ?? '7777';
+
         return [
             'name' => $order['server_name'] ?: ('Serveur-' . $order['id']),
             'user' => $userId,
@@ -84,7 +87,7 @@ class PterodactylAPI
             'startup' => './samp03svr {{SERVER_PORT}} {{MAX_PLAYERS}}',
             'environment' => [
                 'SAMP_VERSION' => '0.3.7',
-                'SERVER_PORT' => 0,
+                'SERVER_PORT' => (string)$allocPort,
                 'MAX_PLAYERS' => $maxPlayers,
             ],
             'limits' => [
