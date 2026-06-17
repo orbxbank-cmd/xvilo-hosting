@@ -1,6 +1,8 @@
 <?php
 
-require_once __DIR__ . '/Database.php';
+if (!class_exists('Database')) {
+    require __DIR__ . '/Database.php';
+}
 
 class Auth
 {
