@@ -32,16 +32,15 @@ if (($action === 'approve' || $action === 'retry') && isset($_GET['id'])) {
         $pteroConfig = $config['pterodactyl'];
 
         $userId = $ptero->findUserByUsername('client1') ?: 1;
-        $allocationId = $ptero->getNextAllocation($pteroConfig['node_id']);
+        $allocInfo = $ptero->getNextAllocation($pteroConfig['node_id']);
 
-        if ($allocationId) {
-            $serverParams = $ptero->buildServerPayload($order, $allocationId, $userId);
+        if ($allocInfo) {
+            $serverParams = $ptero->buildServerPayload($order, $allocInfo['id'], $userId);
             $result = $ptero->createServer($serverParams);
 
             if ($result && isset($result['attributes'])) {
                 $serverId = $result['attributes']['id'];
                 $uuid = $result['attributes']['uuid'];
-                $allocPort = $result['attributes']['allocation'] ?? 0;
 
                 $username = 'u' . $serverId;
                 $password = bin2hex(random_bytes(6));
@@ -49,7 +48,7 @@ if (($action === 'approve' || $action === 'retry') && isset($_GET['id'])) {
                 $updateData = [
                     'status' => 'approved',
                     'server_id' => $serverId,
-                    'server_port' => $allocPort,
+                    'server_port' => $allocInfo['port'],
                     'server_username' => $username,
                     'server_password' => $password,
                     'expires_at' => date('Y-m-d H:i:s', strtotime('+30 days')),

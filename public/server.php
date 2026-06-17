@@ -25,9 +25,6 @@ $container = $srvAttr['container'] ?? [];
 $env = $container['environment'] ?? [];
 $sampVer = $env['SAMP_VERSION'] ?? '0.3.7';
 
-$vpsApiUrl = 'http://62.84.180.151/panel-api.php';
-$apiSecret = 'xvil0pr0xy2024!';
-
 $allocation = $ptero->request('GET', "/api/application/nodes/{$node}/allocations/{$allocId}");
 $allocPort = $allocation['attributes']['port'] ?? 0;
 
@@ -154,13 +151,11 @@ require __DIR__ . '/../templates/header.php';
 </div>
 
 <script>
-const VPS_URL = '<?= $vpsApiUrl ?>';
-const KEY = '<?= $apiSecret ?>';
 const SERVER_ID = <?= (int)$order['server_id'] ?>;
 let statusInterval, consoleInterval;
 
 async function api(action, extra = '') {
-  const url = VPS_URL + '?action=' + action + '&key=' + KEY + '&server_id=' + SERVER_ID + extra;
+  const url = '/api/proxy.php?action=' + action + '&server_id=' + SERVER_ID + extra;
   try {
     const r = await fetch(url);
     return await r.json();

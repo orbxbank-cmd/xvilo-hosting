@@ -44,14 +44,18 @@ class PterodactylAPI
         return null;
     }
 
-    public function getNextAllocation(int $nodeId): ?int
+    public function getNextAllocation(int $nodeId): ?array
     {
         $res = $this->request('GET', "/api/application/nodes/{$nodeId}/allocations?per_page=100");
         if (!$res || empty($res['data'])) return null;
 
         foreach ($res['data'] as $alloc) {
             if (!$alloc['attributes']['assigned']) {
-                return $alloc['attributes']['id'];
+                return [
+                    'id' => $alloc['attributes']['id'],
+                    'port' => $alloc['attributes']['port'],
+                    'ip' => $alloc['attributes']['ip'],
+                ];
             }
         }
         return null;
