@@ -109,6 +109,11 @@ $orders = $db->fetchAll("SELECT o.*, u.email AS user_email FROM xvilo_orders o L
         <a href="/admin/logout.php" class="logout-btn">Déconnexion</a>
       </div>
 
+      <div class="admin-nav" style="display:flex;gap:8px;margin-bottom:20px;">
+        <a href="/admin/orders.php" class="active" style="padding:8px 18px;border-radius:6px;font-size:13px;font-weight:600;text-decoration:none;background:var(--accent);color:#fff;">Commandes</a>
+        <a href="/admin/users.php" class="inactive" style="padding:8px 18px;border-radius:6px;font-size:13px;font-weight:600;text-decoration:none;background:var(--bg-alt);color:var(--text-muted);border:1px solid var(--border);">Utilisateurs</a>
+      </div>
+
       <?php if (isset($_GET['msg'])): ?>
         <div class="admin-msg"><?= htmlspecialchars($_GET['msg']) ?></div>
       <?php endif; ?>

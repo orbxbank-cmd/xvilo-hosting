@@ -17,6 +17,8 @@ class Auth
     {
         self::init();
         $_SESSION['user_id'] = $userId;
+        $db = Database::getInstance();
+        $db->update('users', ['updated_at' => date('Y-m-d H:i:s')], 'id = :id', ['id' => $userId]);
     }
 
     public static function logout(): void
