@@ -1,5 +1,7 @@
 <?php
-session_start();
+require __DIR__ . '/../core/Database.php';
+require __DIR__ . '/../core/Auth.php';
+Auth::init();
 require __DIR__ . '/../templates/header.php';
 
 $order_id = $_GET['id'] ?? '';
@@ -8,7 +10,6 @@ if (!$order_id) {
     exit;
 }
 
-require __DIR__ . '/../core/Database.php';
 $db = Database::getInstance();
 $order = $db->fetch("SELECT * FROM xvilo_orders WHERE id = ? AND status = 'pending'", [$order_id]);
 if (!$order) {

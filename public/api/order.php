@@ -24,15 +24,20 @@ if (!$userId) {
     exit;
 }
 
-$db = Database::getInstance();
-$orderId = $db->insert('xvilo_orders', [
-    'user_id'         => $userId,
-    'plan_name'       => $plan,
-    'plan_price'      => $price,
-    'customer_name'   => $name,
-    'customer_contact' => $contact,
-    'server_name'     => $server_name,
-    'gamemode'        => $gamemode ?: null,
-]);
-
-header('Location: /payment.php?id=' . $orderId);
+try {
+    $db = Database::getInstance();
+    $orderId = $db->insert('xvilo_orders', [
+        'user_id'         => $userId,
+        'plan_name'       => $plan,
+        'plan_price'      => $price,
+        'customer_name'   => $name,
+        'customer_contact' => $contact,
+        'server_name'     => $server_name,
+        'gamemode'        => $gamemode ?: null,
+    ]);
+    header('Location: /payment.php?id=' . $orderId);
+    exit;
+} catch (Exception $e) {
+    header('Location: /order.php?plan=' . urlencode($plan) . '&price=' . $price . '&error=' . urlencode('Erreur: ' . $e->getMessage()));
+    exit;
+}

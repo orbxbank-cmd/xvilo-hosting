@@ -17,10 +17,15 @@ if (!$user) {
     exit;
 }
 
+$error = $_GET['error'] ?? '';
+
 require __DIR__ . '/../templates/header.php';
 ?>
 <section class="section" style="padding-top:120px;">
   <div class="container" style="max-width:600px;">
+    <?php if ($error): ?>
+      <div class="admin-msg" style="background:var(--accent);margin-bottom:20px;"><?= htmlspecialchars($error) ?></div>
+    <?php endif; ?>
     <h2 class="section-title">Commander <span class="gradient-text"><?= htmlspecialchars($plan) ?></span></h2>
     <p class="section-sub">Plan à <strong><?= $price ?> DH/mois</strong></p>
 
