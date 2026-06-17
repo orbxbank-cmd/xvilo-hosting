@@ -1,5 +1,6 @@
 <?php
 require __DIR__ . '/../core/Database.php';
+require __DIR__ . '/../core/PterodactylAPI.php';
 require __DIR__ . '/../core/Auth.php';
 Auth::require();
 $user = Auth::user();

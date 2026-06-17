@@ -13,7 +13,7 @@ class PterodactylAPI
         $this->apiKey = $ptero['api_key'];
     }
 
-    private function request(string $method, string $endpoint, array $data = []): ?array
+    public function request(string $method, string $endpoint, array $data = []): ?array
     {
         $url = $this->baseUrl . $endpoint;
         $ch = curl_init($url);
