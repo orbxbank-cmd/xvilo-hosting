@@ -82,6 +82,31 @@ require __DIR__ . '/../templates/header.php';
     </div>
     <?php endif; ?>
   </div>
+
+  <?php if ($order['server_db_name'] && $order['server_db_user'] && $order['server_db_pass']): ?>
+  <div class="panel-box" style="margin-top:20px;">
+    <p>Base de données MySQL — phpMyAdmin</p>
+    <div class="cred-box">
+      <div class="row">
+        <span class="label">phpMyAdmin</span>
+        <a href="http://62.84.180.151/phpmyadmin/" target="_blank" style="color:#3b82f6;font-family:monospace;font-size:14px;">http://62.84.180.151/phpmyadmin/</a>
+      </div>
+      <div class="row">
+        <span class="label">Base</span>
+        <span class="value"><?= htmlspecialchars($order['server_db_name']) ?></span>
+      </div>
+      <div class="row">
+        <span class="label">Utilisateur</span>
+        <span class="value"><?= htmlspecialchars($order['server_db_user']) ?></span>
+      </div>
+      <div class="row">
+        <span class="label">Mot de passe</span>
+        <span class="value"><?= htmlspecialchars($order['server_db_pass']) ?></span>
+      </div>
+    </div>
+    <a href="/api/db-login.php?id=<?= $id ?>" target="_blank" class="panel-link">Connexion automatique phpMyAdmin</a>
+  </div>
+  <?php endif; ?>
 </div>
 
 <script>
