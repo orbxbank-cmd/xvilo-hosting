@@ -70,6 +70,21 @@ class PterodactylAPI
         return null;
     }
 
+    public function createUser(string $email, string $username, string $firstName, string $lastName, string $password): ?int
+    {
+        $res = $this->request('POST', '/api/application/users', [
+            'email' => $email,
+            'username' => $username,
+            'first_name' => $firstName,
+            'last_name' => $lastName,
+            'password' => $password,
+        ]);
+        if ($res && isset($res['attributes']['id'])) {
+            return $res['attributes']['id'];
+        }
+        return null;
+    }
+
     public function createServer(array $params): ?array
     {
         return $this->request('POST', '/api/application/servers', $params);

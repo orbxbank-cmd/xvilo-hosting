@@ -31,7 +31,21 @@ if (($action === 'approve' || $action === 'retry') && isset($_GET['id'])) {
         $ptero = new PterodactylAPI();
         $pteroConfig = $config['pterodactyl'];
 
-        $userId = $ptero->findUserByUsername('client1') ?: 1;
+        $clientEmail = $order['customer_contact'];
+        $clientName = $order['customer_name'];
+        $pteroUser = bin2hex(random_bytes(4));
+        $pteroPass = bin2hex(random_bytes(6));
+        $pteroEmail = (strpos($clientEmail, '@') !== false) ? $clientEmail : ($pteroUser . '@xvilo.host');
+        $pteroUserId = $ptero->createUser($pteroEmail, $pteroUser, $clientName, $clientName, $pteroPass);
+        if ($pteroUserId) {
+            $userId = $pteroUserId;
+            $pteroLogin = $pteroEmail;
+        } else {
+            $userId = 1;
+            $pteroLogin = '';
+            $pteroPass = '';
+        }
+
         $allocInfo = $ptero->getNextAllocation($pteroConfig['node_id']);
 
         if ($allocInfo) {
@@ -42,17 +56,16 @@ if (($action === 'approve' || $action === 'retry') && isset($_GET['id'])) {
                 $serverId = $result['attributes']['id'];
                 $uuid = $result['attributes']['uuid'];
 
-                $username = 'u' . $serverId;
-                $password = bin2hex(random_bytes(6));
-
                 $updateData = [
                     'status' => 'approved',
                     'server_id' => $serverId,
                     'server_port' => $allocInfo['port'],
-                    'server_username' => $username,
-                    'server_password' => $password,
                     'expires_at' => date('Y-m-d H:i:s', strtotime('+30 days')),
                 ];
+                if ($pteroLogin) {
+                    $updateData['server_username'] = $pteroLogin;
+                    $updateData['server_password'] = $pteroPass;
+                }
 
                 $dbResult = $ptero->createDatabase($serverId, $pteroConfig['dbhost_id']);
                 if ($dbResult && isset($dbResult['attributes'])) {

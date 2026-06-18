@@ -123,10 +123,10 @@ require __DIR__ . '/../templates/header.php';
     </div>
 
     <div style="background:#1a1a1a;border:1px solid #333;border-radius:10px;padding:16px 20px;margin-bottom:24px;display:flex;align-items:center;gap:16px;flex-wrap:wrap;">
-      <span style="font-size:13px;color:var(--text-muted);font-weight:600;">🔐 Panel Pterodactyl</span>
+      <span style="font-size:13px;color:var(--text-muted);font-weight:600;">Panier Pterodactyl</span>
       <a href="http://62.84.180.151/" target="_blank" style="color:#3b82f6;font-size:14px;font-weight:600;text-decoration:none;">http://62.84.180.151/</a>
-      <span style="font-size:13px;color:#888;">Login: <b style="color:#fff;">admin</b></span>
-      <span style="font-size:13px;color:#888;">Pass: <b style="color:#fff;">admin123</b></span>
+      <span style="font-size:13px;color:#888;">Email: <b style="color:#fff;"><?= htmlspecialchars($order['server_username'] ?: $user['email']) ?></b></span>
+      <span style="font-size:13px;color:#888;">Pass: <b style="color:#fff;"><?= htmlspecialchars($order['server_password'] ?: '-------') ?></b></span>
     </div>
 
     <?php if ($order['expires_at']): ?>
