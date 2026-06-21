@@ -108,6 +108,7 @@ class PterodactylAPI
                 'SAMP_VERSION' => '0.3.7',
                 'SERVER_PORT' => (string)$allocPort,
                 'MAX_PLAYERS' => $maxPlayers,
+                'SAMP_RCON_PASSWORD' => bin2hex(random_bytes(6)),
             ],
             'limits' => [
                 'memory' => $resources['memory'],
