@@ -103,7 +103,7 @@ class PterodactylAPI
             'user' => $userId,
             'egg' => 1,
             'docker_image' => 'temasm/samp',
-            'startup' => './samp03svr {{SERVER_PORT}} {{MAX_PLAYERS}}',
+            'startup' => 'bash start.sh',
             'environment' => [
                 'SAMP_VERSION' => '0.3.7',
                 'SERVER_PORT' => (string)$allocPort,
