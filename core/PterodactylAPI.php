@@ -102,8 +102,8 @@ class PterodactylAPI
             'name' => $order['server_name'] ?: ('Serveur-' . $order['id']),
             'user' => $userId,
             'egg' => 1,
-            'docker_image' => 'temasm/samp',
-            'startup' => 'bash start.sh',
+            'docker_image' => 'localhost:5000/samp-server:latest',
+            'startup' => 'bash start.sh {{SERVER_PORT}} {{MAX_PLAYERS}}',
             'environment' => [
                 'SAMP_VERSION' => '0.3.7',
                 'SERVER_PORT' => (string)$allocPort,
